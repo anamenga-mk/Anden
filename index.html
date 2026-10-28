@@ -1,0 +1,808 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Andén Arquitectura</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<meta name="description" content="Un viaje diario de 10 minutos por la arquitectura: 147 obras de la Antigüedad a hoy, preguntas, racha y colecciones de Pritzker, Latinoamérica y arquitectas.">
+<meta name="theme-color" content="#ebd3a2">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Andén">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<style>:root{padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}</style>
+</head>
+<body>
+<style>/* Layout: una sola pantalla con pestañas abajo. Combinación n.º 184 de Sanzo Wada:
+   Ivory Buff de fondo, Spinel Red para la tipografía (en su tono profundo, para que se lea) y
+   Light Grayish Olive para subtítulos y detalles. Papel claro, como una lámina de dibujo. */
+:root{
+  --buff:#ebd3a2;            /* Ivory Buff: fondos */
+  --spinel:#f27291;          /* Spinel Red exacto: acentos grandes, línea de paradas, ícono */
+  --olive:#848061;           /* Light Grayish Olive exacto: líneas y detalles */
+  --ink:#9c2a48;             /* Spinel Red profundo: tipografía (contraste 5:1 sobre el fondo) */
+  --olive-ink:#5f5c43;       /* oliva profundo: subtítulos (contraste 4,6:1) */
+  --bg:var(--buff);
+  --surface:#f2e2bf;         /* buff más claro para tarjetas */
+  --raise:#dfc690;           /* buff más oscuro para pistas y huecos */
+  --line:rgba(132,128,97,.42);
+  --fg:var(--ink);
+  --muted:var(--olive-ink);
+  --accent:var(--spinel);
+  --on-ink:var(--buff);
+  --ok:var(--olive);
+  --bad:var(--spinel);
+  --shade-top:rgba(235,211,162,.0);
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-read:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Consolas,monospace;
+  --gut-l:max(16px, env(safe-area-inset-left, 0px));
+  --gut-r:max(16px, env(safe-area-inset-right, 0px));
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--fg);font:15px/1.45 var(--f-display);font-stretch:100%;overflow:hidden;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+button:focus-visible,a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+a{color:inherit}
+img{display:block;max-width:100%}
+#app{height:100%;display:flex;flex-direction:column}
+main{flex:1;min-height:0;position:relative}
+.view{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain}
+.pad{padding-left:var(--gut-l);padding-right:var(--gut-r)}
+.mono{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1,h2,h3{margin:0;text-wrap:balance;font-weight:800;font-stretch:118%;line-height:1.05;color:var(--ink)}
+
+/* ---------- pestañas ---------- */
+nav.tabs{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);background:var(--bg);padding-left:var(--gut-l);padding-right:var(--gut-r)}
+nav.tabs button{display:flex;flex-direction:column;align-items:center;gap:3px;padding-block:9px 8px;color:var(--olive-ink);font-size:11px;font-weight:600;letter-spacing:.02em}
+nav.tabs button svg{width:22px;height:22px}
+nav.tabs button[aria-current="page"]{color:var(--ink)}
+nav.tabs button[aria-current="page"] svg{color:var(--ink)}
+nav.tabs button[aria-current="page"]::after{content:"";width:18px;height:3px;background:var(--spinel);margin-top:1px}
+
+/* ---------- inicio ---------- */
+.home{display:flex;flex-direction:column;gap:22px;padding-block:18px 28px}
+.brand{display:flex;justify-content:space-between;align-items:center}
+.brand .mark{display:flex;align-items:center;gap:10px}
+.brand .mark svg{width:40px;height:40px;border-radius:9px}
+.brand b{font-size:26px;font-weight:900;font-stretch:125%;letter-spacing:.04em;color:var(--ink)}
+.edge{height:6px;background:repeating-linear-gradient(90deg,var(--spinel) 0 10px,transparent 10px 13px);border-radius:1px}
+.streak{display:grid;grid-template-columns:auto 1fr;gap:4px 16px;align-items:end}
+.streak .n{font-size:64px;font-weight:900;font-stretch:125%;line-height:.85;font-variant-numeric:tabular-nums;color:var(--ink)}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;grid-column:1/-1;margin-top:10px}
+.week div{display:flex;flex-direction:column;align-items:center;gap:4px}
+.week i{display:block;width:100%;height:8px;border-radius:1px;background:var(--raise)}
+.week i.on{background:var(--spinel)}
+.week i.today{outline:1px solid var(--ink);outline-offset:2px}
+.trip{position:relative;border-radius:6px;overflow:hidden;background:var(--surface);border:1px solid var(--line)}
+.trip>img{width:100%;height:170px;object-fit:cover}
+.trip .in{padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px}
+.trip h2{font-size:30px}
+.stops{display:flex;align-items:center;gap:0;margin:6px 0 2px}
+.stops i{flex:1;height:3px;background:var(--line)}
+.stops i.done{background:var(--spinel)}
+.stops b{width:11px;height:11px;border-radius:50%;border:2px solid var(--olive);background:var(--bg);flex:none}
+.stops b.done{border-color:var(--spinel);background:var(--spinel)}
+.stops b.sq{border-radius:1px;transform:rotate(45deg) scale(.9)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:0 20px;border-radius:4px;background:var(--ink);color:var(--on-ink);font-weight:800;font-stretch:112%;font-size:16px;letter-spacing:.01em}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--olive)}
+.btn:disabled{opacity:.4;cursor:default}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row2 .btn{font-size:14.5px;font-stretch:100%;padding:0 10px;white-space:nowrap}
+.card{background:var(--surface);border-radius:6px;padding:16px;border:1px solid var(--line)}
+.laureate{display:grid;grid-template-columns:1fr 88px;gap:14px;align-items:center}
+.laureate .yr{font-family:var(--f-mono);font-size:30px;font-weight:500;color:var(--ink);line-height:1}
+.laureate h3{font-size:19px;margin-top:6px}
+.laureate p{font-family:var(--f-read);font-size:15px;margin:6px 0 0;color:var(--olive-ink)}
+.laureate img{width:88px;height:88px;object-fit:cover;border-radius:4px}
+.bars{display:flex;flex-direction:column;gap:12px}
+.bar{display:grid;grid-template-columns:1fr auto;gap:6px 10px;align-items:baseline}
+.bar span{font-weight:700}
+.bar em{font-style:normal;font-family:var(--f-mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar .track{grid-column:1/-1;height:4px;background:var(--raise);border-radius:2px;overflow:hidden}
+.bar .track i{display:block;height:100%;background:var(--spinel)}
+.sec-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+.note{font-size:13px;color:var(--muted);margin:0}
+
+/* ---------- explorar (feed) ---------- */
+.feed{position:absolute;inset:0;overflow-y:scroll;scroll-snap-type:y mandatory;overscroll-behavior:contain;scrollbar-width:none}
+.feed::-webkit-scrollbar{display:none}
+.reel{position:relative;height:100%;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden;background:var(--raise)}
+.reel>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.reel .shade{position:absolute;inset:0;background:linear-gradient(rgba(235,211,162,.55),rgba(235,211,162,0) 14%,rgba(235,211,162,0) 44%,rgba(235,211,162,.9) 64%,var(--buff) 80%)}
+.reel .txt{position:absolute;left:0;right:68px;bottom:0;padding-left:var(--gut-l);padding-bottom:22px;display:flex;flex-direction:column;gap:6px}
+.reel h2{font-size:30px}
+.reel .who{font-family:var(--f-read);font-style:italic;font-size:16px;color:var(--ink)}
+.reel .meta{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--olive-ink)}
+.reel .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.tag{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;border-radius:2px;border:1px solid var(--olive);color:var(--olive-ink)}
+.tag.y{background:var(--spinel);border-color:var(--spinel);color:#3b0d1a}
+.side{position:absolute;right:max(10px, env(safe-area-inset-right, 0px));bottom:26px;display:flex;flex-direction:column;gap:18px;align-items:center;color:var(--ink)}
+.side button{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;font-weight:600}
+.side svg{width:30px;height:30px}
+.side .on svg{color:var(--spinel);fill:var(--spinel)}
+.credit{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.02em;color:var(--olive-ink);text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+.chips{position:absolute;top:0;left:0;right:0;z-index:3;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:12px var(--gut-r) 12px var(--gut-l)}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;padding:7px 12px;border-radius:999px;background:rgba(235,211,162,.88);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:var(--ink);font-weight:700;font-size:13px;border:1px solid var(--line)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--buff);border-color:var(--ink)}
+.burst{position:absolute;left:50%;top:40%;width:110px;height:110px;margin:-55px 0 0 -55px;color:var(--spinel);fill:var(--spinel);pointer-events:none;animation:burst .7s ease-out forwards}
+@keyframes burst{0%{transform:scale(.3);opacity:0}25%{transform:scale(1.1);opacity:1}100%{transform:scale(1);opacity:0}}
+.hint{position:absolute;left:50%;top:64px;white-space:nowrap;transform:translateX(-50%);font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--buff);background:var(--ink);padding:6px 10px;border-radius:2px;pointer-events:none}
+
+/* ---------- colecciones ---------- */
+.cols{display:flex;flex-direction:column;gap:26px;padding-block:18px 28px}
+.colgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.coltile{position:relative;aspect-ratio:4/5;max-width:100%;border-radius:6px;overflow:hidden;text-align:left;background:var(--surface);border:1px solid var(--line)}
+.coltile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.coltile .in{position:absolute;inset:auto 0 0 0;padding:12px;display:flex;flex-direction:column;gap:6px;background:linear-gradient(rgba(242,226,191,0),rgba(242,226,191,.95) 28%,var(--surface))}
+.coltile b{font-size:17px;font-weight:800;font-stretch:112%;line-height:1.1;color:var(--ink)}
+.coltile .track{height:3px;background:var(--raise)}
+.coltile .track i{display:block;height:100%;background:var(--spinel)}
+.coltile em{font-style:normal;font-family:var(--f-mono);font-size:11px;color:var(--olive-ink)}
+.coltile.wide{grid-column:1/-1;aspect-ratio:16/9}
+.coltile.wide b{font-size:24px}
+.colhead{display:flex;flex-direction:column;gap:12px;padding-block:16px 8px}
+.back{display:inline-flex;align-items:center;gap:6px;color:var(--olive-ink);font-weight:600}
+.list{display:flex;flex-direction:column}
+.li{display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);text-align:left;width:100%}
+.li img,.li .ph{width:64px;height:64px;object-fit:cover;border-radius:3px;background:var(--raise)}
+.li b{display:block;font-weight:700;line-height:1.2;color:var(--ink)}
+.li small{display:block;color:var(--olive-ink);font-size:13px;margin-top:2px;min-width:0}
+.li .y{font-family:var(--f-mono);font-size:12px;color:var(--olive-ink);text-align:right;font-variant-numeric:tabular-nums}
+.li .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--spinel);margin-left:6px;vertical-align:middle}
+.prow{display:grid;grid-template-columns:58px 1fr 56px;gap:12px;align-items:start;padding:14px 0;border-bottom:1px solid var(--line);text-align:left;width:100%}
+.prow .yr{font-family:var(--f-mono);font-size:17px;font-weight:500;color:var(--ink);padding-top:2px}
+.prow b{display:block;font-size:16px;font-weight:800;font-stretch:110%;line-height:1.15;color:var(--ink)}
+.prow small{display:block;font-size:12px;color:var(--olive-ink);margin-top:2px}
+.prow p{font-family:var(--f-read);font-size:14.5px;margin:6px 0 0;line-height:1.4;color:var(--olive-ink)}
+.prow img{width:56px;height:56px;object-fit:cover;border-radius:3px}
+
+/* ---------- ficha de obra ---------- */
+.ficha{display:flex;flex-direction:column;gap:14px}
+.photo{position:relative;margin:0 calc(-1 * var(--gut-r)) 0 calc(-1 * var(--gut-l));background:var(--raise)}
+.photo img{width:100%;height:min(48vh,440px);object-fit:cover}
+.photo .credit{position:absolute;left:var(--gut-l);right:var(--gut-r);bottom:0;padding:3px 0;background:linear-gradient(rgba(235,211,162,0),rgba(235,211,162,.9))}
+.photo .ph{height:min(40vh,360px)}
+.ficha h2{font-size:30px}
+.ficha .who{font-family:var(--f-read);font-style:italic;font-size:17px;margin-top:-6px;color:var(--ink)}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;margin:0;padding:12px 0;border-block:1px solid var(--line)}
+.facts div{min-width:0}
+.facts dt{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--olive-ink)}
+.facts dd{margin:2px 0 0;font-weight:600;font-size:14.5px;color:var(--ink)}
+.read{font-family:var(--f-read);font-size:17.5px;line-height:1.55;margin:0;max-width:62ch;color:var(--ink)}
+.look{display:flex;flex-direction:column;gap:6px;padding:14px;background:var(--surface);border-radius:4px;border:1px solid var(--line)}
+.look .mono{color:var(--ink)}
+.look p{margin:0;font-family:var(--f-read);font-size:16.5px;line-height:1.5;color:var(--olive-ink)}
+.ph{display:flex;align-items:center;justify-content:center;background:repeating-linear-gradient(135deg,var(--raise) 0 2px,var(--surface) 2px 12px);color:var(--olive-ink);font-family:var(--f-mono);font-size:11px}
+
+/* ---------- pantalla del viaje ---------- */
+.overlay{position:fixed;inset:0;z-index:20;background:var(--bg);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top, 0px);padding-bottom:env(safe-area-inset-bottom, 0px)}
+.overlay[hidden]{display:none}
+.tbar{display:flex;flex-direction:column;gap:8px;padding:10px var(--gut-r) 10px var(--gut-l);border-bottom:1px solid var(--line)}
+.tbar .top{display:flex;justify-content:space-between;align-items:center}
+.x{width:36px;height:36px;display:flex;align-items:center;justify-content:center;margin-left:-8px;color:var(--ink)}
+.x svg{width:22px;height:22px}
+.tbody{flex:1;min-height:0;overflow-y:auto;padding:0 var(--gut-r) 20px var(--gut-l)}
+.tfoot{padding:10px var(--gut-r) 12px var(--gut-l);border-top:1px solid var(--line);display:flex;gap:10px}
+.tfoot .btn{flex:1}
+.favbtn{width:50px;min-height:50px;border:1px solid var(--olive);border-radius:4px;display:flex;align-items:center;justify-content:center;flex:none;color:var(--ink)}
+.favbtn svg{width:24px;height:24px}
+.favbtn.on svg{color:var(--spinel);fill:var(--spinel)}
+.q{display:flex;flex-direction:column;gap:14px;padding-top:18px}
+.q h2{font-size:25px}
+.qsub{margin:-6px 0 0;font-family:var(--f-read);font-style:italic;font-size:19px;color:var(--olive-ink)}
+.q .qimg{margin:0 calc(-1 * var(--gut-r)) 0 calc(-1 * var(--gut-l))}
+.q .qimg img{width:100%;height:min(34vh,300px);object-fit:cover}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;align-items:center;gap:12px;min-height:52px;padding:10px 14px;border-radius:4px;border:1px solid var(--olive);background:var(--surface);text-align:left;font-weight:600;font-size:15.5px;line-height:1.25;color:var(--ink)}
+.opt .k{font-family:var(--f-mono);font-size:12px;color:var(--olive-ink);flex:none;width:14px}
+.opt.ok{border:2px solid var(--olive);background:color-mix(in srgb,var(--olive) 30%,var(--surface))}
+.opt.bad{border:2px solid var(--spinel);background:color-mix(in srgb,var(--spinel) 28%,var(--surface))}
+.opt:disabled{cursor:default}
+.verdict{display:flex;flex-direction:column;gap:4px;padding:12px 14px;border-radius:4px;background:var(--surface);border-left:4px solid var(--olive)}
+.verdict.bad{border-left-color:var(--spinel)}
+.verdict b{font-size:17px}
+.verdict.ok b{color:var(--olive-ink)} .verdict.bad b{color:var(--ink)}
+.verdict p{margin:0;font-family:var(--f-read);font-size:15.5px;color:var(--ink)}
+.order{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.ord{position:relative;display:flex;flex-direction:column;gap:6px;text-align:left}
+.ord img,.ord .ph{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:4px;border:3px solid transparent}
+.ord.sel img,.ord.sel .ph{border-color:var(--spinel)}
+.ord .num{position:absolute;top:6px;left:6px;width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--buff);font-family:var(--f-mono);font-weight:500;display:flex;align-items:center;justify-content:center}
+.ord span{font-size:12.5px;font-weight:700;line-height:1.2;color:var(--ink)}
+.ord small{font-family:var(--f-mono);font-size:11px;color:var(--olive-ink)}
+.arrive{display:flex;flex-direction:column;gap:18px;padding-top:28px}
+.arrive h2{font-size:40px;font-stretch:125%}
+.stat3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat3 div{background:var(--surface);border-radius:4px;padding:12px;border:1px solid var(--line)}
+.stat3 b{display:block;font-size:30px;font-weight:900;font-stretch:120%;font-variant-numeric:tabular-nums;color:var(--ink)}
+
+/* ---------- progreso ---------- */
+.prog{display:flex;flex-direction:column;gap:24px;padding-block:18px 28px}
+.big4{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.big4 div{background:var(--surface);border-radius:6px;padding:14px;border:1px solid var(--line)}
+.big4 b{display:block;font-size:36px;font-weight:900;font-stretch:122%;line-height:1;font-variant-numeric:tabular-nums;color:var(--ink)}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.cal i{aspect-ratio:1;border-radius:2px;background:var(--raise)}
+.cal i.on{background:var(--spinel)}
+.cal i.today{outline:1px solid var(--ink);outline-offset:1px}
+.favs{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.favs button{aspect-ratio:1;max-width:100%;overflow:hidden;background:var(--raise)}
+.favs img{width:100%;height:100%;object-fit:cover}
+.empty{color:var(--olive-ink);font-family:var(--f-read);font-size:15.5px;margin:0}
+.danger{color:var(--ink);font-weight:600;font-size:14px;text-decoration:underline;text-underline-offset:3px}
+.confirm{display:flex;flex-direction:column;gap:10px;padding:14px;border:1px solid var(--spinel);border-radius:4px}
+.install{display:flex;flex-direction:column;gap:6px;padding:14px;border:1px dashed var(--olive);border-radius:6px}
+.install b{color:var(--ink)}
+
+@media (min-width:760px){
+  .home,.cols,.prog,.colhead,.list{max-width:720px;margin-inline:auto;width:100%}
+  .tbody>*{max-width:680px;margin-inline:auto}
+  .photo{margin:0}
+  .photo img{border-radius:4px}
+  .q .qimg{margin:0}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}}
+</style>
+
+<template id="logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" fill="#ebd3a2"/><rect x="34" y="358" width="444" height="14" fill="#848061"/><line x1="214" y1="214" x2="214" y2="140" stroke="#848061" stroke-width="7"/><rect x="66" y="214" width="290" height="96" fill="#f27291"/><rect x="150" y="232" width="206" height="16" fill="#ebd3a2"/><rect x="150" y="264" width="206" height="26" fill="#848061"/><circle cx="252" cy="277" r="9" fill="none" stroke="#ebd3a2" stroke-width="5"/><rect x="356" y="180" width="92" height="178" fill="#f27291"/><rect x="380" y="150" width="46" height="30" fill="#f27291"/><rect x="372" y="206" width="58" height="14" fill="#ebd3a2"/><rect x="196" y="310" width="11" height="48" fill="#f27291"/><rect x="296" y="310" width="11" height="48" fill="#f27291"/><line x1="58" y1="358" x2="112" y2="310" stroke="#848061" stroke-width="8"/></svg></template>
+<div id="app">
+  <main>
+    <section class="view" id="v-viaje" aria-label="Viaje"></section>
+    <section class="view" id="v-explorar" aria-label="Explorar" hidden></section>
+    <section class="view" id="v-colecciones" aria-label="Colecciones" hidden></section>
+    <section class="view" id="v-progreso" aria-label="Progreso" hidden></section>
+  </main>
+  <nav class="tabs" aria-label="Secciones">
+    <button data-tab="viaje"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 11h14M9 21l-2 0M8 17l-2 4M16 17l2 4"/><circle cx="9" cy="14" r=".6" fill="currentColor"/><circle cx="15" cy="14" r=".6" fill="currentColor"/></svg>Viaje</button>
+    <button data-tab="explorar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M10 9l4 3-4 3z" fill="currentColor"/></svg>Explorar</button>
+    <button data-tab="colecciones"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18M5 21V10l7-5 7 5v11M9 21v-6h6v6"/></svg>Colecciones</button>
+    <button data-tab="progreso"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Progreso</button>
+  </nav>
+  <div class="overlay" id="trip" hidden role="dialog" aria-modal="true" aria-label="Viaje de hoy"></div>
+  <div class="overlay" id="sheet" hidden role="dialog" aria-modal="true" aria-label="Ficha"></div>
+</div>
+
+<script id="data" type="application/json">{"works":[{"id":"giza","t":"Gran Pirámide de Guiza","a":"Hemiunu (atribuido)","y":-2560,"yd":"c. 2560 a.C.","c":"Guiza","p":"Egipto","per":"antigua","est":"Egipcio","esc":"conjunto","tags":[],"d":"Tumba del faraón Keops y durante casi 4.000 años la construcción más alta del mundo. Más de dos millones de bloques de piedra caliza y granito, alineados con los puntos cardinales con un error mínimo.","k":"La forma pura: cuatro triángulos sobre un cuadrado. Originalmente estaba revestida de caliza blanca pulida que reflejaba el sol.","co":[29.9792,31.1342],"img":1,"cr":"Nina","lic":"CC BY 2.5","src":"https://commons.wikimedia.org/wiki/File:Kheops-Pyramid.jpg"},{"id":"stonehenge","t":"Stonehenge","a":"Autores desconocidos (Neolítico)","y":-2500,"yd":"c. 3000–2000 a.C.","c":"Wiltshire","p":"Reino Unido","per":"antigua","est":"Megalítico","esc":"conjunto","tags":[],"d":"Círculo de grandes piedras levantado en varias fases durante unos mil años. Su eje se alinea con la salida del sol en el solsticio de verano.","k":"El sistema de dintel sobre dos pilares, el gesto constructivo más antiguo de la arquitectura, unido con encastres copiados de la carpintería.","co":[51.1789,-1.8261],"img":1,"cr":"Stefan Kühn","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:Stonehenge_Total.jpg"},{"id":"persepolis","t":"Persépolis","a":"Encargo de Darío I","y":-518,"yd":"c. 518 a.C.","c":"Fars","p":"Irán","per":"antigua","est":"Aqueménida","esc":"conjunto","tags":[],"d":"Capital ceremonial del Imperio persa aqueménida, levantada sobre una gran terraza artificial. Alejandro Magno la incendió en el 330 a.C.","k":"La Apadana, sala de audiencias con un bosque de columnas altísimas coronadas por toros de doble cabeza.","co":[29.935,52.89],"img":1,"cr":"Alborzagros","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:Gate_of_All_Nations,_Persepolis.jpg"},{"id":"partenon","t":"Partenón","a":"Ictino y Calícrates; escultura de Fidias","y":-438,"yd":"447–432 a.C.","c":"Atenas","p":"Grecia","per":"antigua","est":"Clásico griego (dórico)","esc":"edificio","tags":[],"d":"Templo dedicado a Atenea en la Acrópolis, símbolo de la Atenas de Pericles. Es la referencia de proporción y orden clásico para toda la arquitectura occidental posterior.","k":"No hay líneas rectas: el basamento se curva hacia arriba y las columnas se ensanchan levemente (éntasis) para corregir ilusiones ópticas.","co":[37.9715,23.7266],"img":1,"cr":"Steve Swayne","lic":"CC BY 2.0","src":"https://commons.wikimedia.org/wiki/File:The_Parthenon_in_Athens.jpg"},{"id":"pontdugard","t":"Pont du Gard","a":"Ingenieros romanos","y":50,"yd":"s. I d.C.","c":"Vers-Pont-du-Gard","p":"Francia","per":"antigua","est":"Romano","esc":"conjunto","tags":[],"d":"Puente del acueducto que llevaba agua a Nîmes a lo largo de unos 50 km, con una pendiente de apenas centímetros por kilómetro. Tres niveles de arcos de piedra sin mortero.","k":"Arquitectura como infraestructura: la belleza viene de repetir un solo elemento, el arco, a tres escalas.","co":[43.9473,4.5355],"img":1,"cr":"Benh LIEU SONG (Flickr)","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:Pont_du_Gard_BLS.jpg"},{"id":"petra","t":"El Tesoro (Al-Khazneh), Petra","a":"Nabateos","y":50,"yd":"s. I d.C.","c":"Petra","p":"Jordania","per":"antigua","est":"Nabateo-helenístico","esc":"edificio","tags":[],"d":"Fachada monumental tallada directamente en la roca arenisca rosada, probablemente un mausoleo real. Se descubre al final de un desfiladero estrecho, el Siq.","k":"Arquitectura por sustracción: nada se construyó, todo se quitó de la montaña.","co":[30.3221,35.4515],"img":1,"cr":"Al_Khazneh_Petra.jpg: Graham Racher from London, UK derivative work: MrPanyGoff","lic":"CC BY-SA 2.0","src":"https://commons.wikimedia.org/wiki/File:Al_Khazneh_Petra_edit_2.jpg"},{"id":"coliseo","t":"Coliseo","a":"Dinastía Flavia","y":80,"yd":"70–80 d.C.","c":"Roma","p":"Italia","per":"antigua","est":"Romano","esc":"edificio","tags":[],"d":"Anfiteatro para unas 50.000 personas, con un sistema de accesos tan eficiente que se vaciaba en minutos. Combina hormigón romano, piedra travertino y ladrillo.","k":"La fachada superpone órdenes: dórico-toscano abajo, jónico en el medio y corintio arriba.","co":[41.8903,12.4922],"img":1,"cr":"FeaturedPics","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Colosseo_2020.jpg"},{"id":"panteon","t":"Panteón de Roma","a":"Encargo de Adriano (autor incierto)","y":125,"yd":"c. 113–125 d.C.","c":"Roma","p":"Italia","per":"antigua","est":"Romano","esc":"edificio","tags":[],"d":"Templo con la cúpula de hormigón sin armar más grande del mundo, aún en uso después de casi 1.900 años. El interior encierra una esfera perfecta de 43 m de diámetro.","k":"El óculo de 9 m en la cima es la única fuente de luz: un disco de sol que recorre el interior durante el día.","co":[41.8986,12.4769],"img":1,"cr":"NikonZ7II","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Pantheon_(Rome)_-_Right_side_and_front.jpg"},{"id":"teotihuacan","t":"Pirámide del Sol, Teotihuacán","a":"Constructores teotihuacanos","y":200,"yd":"c. 200 d.C.","c":"Teotihuacán","p":"México","per":"antigua","est":"Mesoamericano","esc":"ciudad","tags":["latam"],"d":"Una de las pirámides más grandes de Mesoamérica, en una ciudad que llegó a tener más de 100.000 habitantes. Todo el trazado urbano sigue una orientación precisa.","k":"La Calzada de los Muertos, eje de más de 2 km que ordena la ciudad entera y enmarca los cerros del paisaje.","co":[19.6925,-98.8438],"img":1,"cr":"Burkhard Mücke","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:2020-02-11_Teotihuacan_la_Avenida_de_los_Muertos_y_la_Pir%C3%A1mide_del_Sol.jpg"},{"id":"santasofia","t":"Santa Sofía","a":"Antemio de Tralles e Isidoro de Mileto","y":537,"yd":"532–537","c":"Estambul","p":"Turquía","per":"media","est":"Bizantino","esc":"edificio","tags":[],"d":"Basílica del emperador Justiniano, luego mezquita, museo y otra vez mezquita. Su cúpula parece flotar sobre un anillo de ventanas.","k":"Las pechinas: triángulos curvos que permiten apoyar una cúpula redonda sobre una planta cuadrada.","co":[41.0083,28.98],"img":1,"cr":"Arild Vågen","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:Hagia_Sophia_Mars_2013.jpg"},{"id":"horyuji","t":"Templo Hōryū-ji","a":"Encargo del príncipe Shōtoku","y":700,"yd":"c. 607 / reconstr. c. 700","c":"Ikaruga","p":"Japón","per":"media","est":"Budista japonés","esc":"conjunto","tags":[],"d":"Contiene algunos de los edificios de madera más antiguos del mundo. Su pagoda de cinco pisos resiste terremotos desde hace más de 1.300 años.","k":"El pilar central de la pagoda no sostiene: cuelga y amortigua, como un péndulo, el movimiento sísmico.","co":[34.6144,135.7342],"img":1,"cr":"663highland","lic":"CC BY 2.5","src":"https://commons.wikimedia.org/wiki/File:Horyu-ji45s2s4500.jpg"},{"id":"tikal","t":"Templo I de Tikal","a":"Encargo de Jasaw Chan K'awiil I","y":732,"yd":"c. 732","c":"Petén","p":"Guatemala","per":"media","est":"Maya clásico","esc":"edificio","tags":["latam"],"d":"Pirámide funeraria de unos 47 m que emerge sobre la selva. Fue a la vez tumba y escenario de rituales.","k":"La crestería en la cima: un muro decorativo que agrega altura y era visible desde lejos.","co":[17.2221,-89.6231],"img":1,"cr":"autor en Commons","lic":"CC BY-SA 2.0","src":"https://commons.wikimedia.org/wiki/File:Tikal_temple_jaguar.jpg"},{"id":"cordoba","t":"Mezquita de Córdoba","a":"Abderramán I y sucesores","y":987,"yd":"785–987","c":"Córdoba","p":"España","per":"media","est":"Islámico andalusí","esc":"edificio","tags":[],"d":"Ampliada cuatro veces durante dos siglos. En el siglo XVI se insertó una catedral en su centro.","k":"El bosque de columnas con arcos dobles bicolores, de piedra y ladrillo, que se repite hasta perderse de vista.","co":[37.8792,-4.7797],"img":1,"cr":"Toni Castillo Quero","lic":"CC BY-SA 2.0","src":"https://commons.wikimedia.org/wiki/File:Mezquita_de_C%C3%B3rdoba_desde_el_aire_(C%C3%B3rdoba,_Espa%C3%B1a).jpg"},{"id":"borobudur","t":"Borobudur","a":"Dinastía Shailendra","y":825,"yd":"c. 800–825","c":"Java Central","p":"Indonesia","per":"media","est":"Budista javanés","esc":"conjunto","tags":[],"d":"El mayor templo budista del mundo: una montaña artificial de terrazas que se recorre en espiral. Tiene más de 2.600 relieves y 504 estatuas de Buda.","k":"El recorrido es la arquitectura: subir es pasar del mundo del deseo a la iluminación.","co":[-7.6079,110.2038],"img":1,"cr":"Gunawan Kartapranata","lic":"Public domain","src":"https://commons.wikimedia.org/wiki/File:Borobudur-Nothwest-view.jpg"},{"id":"chichen","t":"El Castillo, Chichén Itzá","a":"Mayas y toltecas","y":1000,"yd":"s. IX–XII","c":"Yucatán","p":"México","per":"media","est":"Maya-tolteca","esc":"edificio","tags":["latam"],"d":"Templo de Kukulkán: cuatro escaleras de 91 escalones que, junto con la plataforma superior, suman 365, los días del año. Funciona como un calendario de piedra.","k":"En los equinoccios la sombra de las aristas dibuja una serpiente que baja por la escalera norte.","co":[20.6829,-88.5686],"img":1,"cr":"Daniel Schwen","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Chichen_Itza_3.jpg"},{"id":"angkor","t":"Angkor Wat","a":"Encargo de Suryavarman II","y":1150,"yd":"c. 1113–1150","c":"Siem Riep","p":"Camboya","per":"media","est":"Jemer","esc":"conjunto","tags":[],"d":"El monumento religioso más grande del mundo, primero hindú y luego budista. Representa el monte Meru, centro del universo, rodeado por un foso que simboliza el océano.","k":"Las cinco torres en forma de flor de loto, vistas reflejadas en los estanques al amanecer.","co":[13.4125,103.8667],"img":1,"cr":"The original uploader was Fuzheado at English Wikipedia.","lic":"CC BY-SA 2.0","src":"https://commons.wikimedia.org/wiki/File:Angkor_wat_temple.jpg"},{"id":"notredame","t":"Notre-Dame de París","a":"Maurice de Sully y maestros constructores","y":1345,"yd":"1163–1345","c":"París","p":"Francia","per":"media","est":"Gótico","esc":"edificio","tags":[],"d":"Una de las primeras catedrales en usar arbotantes. Tras el incendio de 2019 fue restaurada y reabrió en diciembre de 2024.","k":"Los arbotantes: brazos de piedra exteriores que empujan contra los muros y permiten abrir enormes rosetones.","co":[48.853,2.3498],"img":1,"cr":"P e z i","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:Notre-Dame_de_Paris_2013-07-24.jpg"},{"id":"chartres","t":"Catedral de Chartres","a":"Maestros constructores anónimos","y":1220,"yd":"1194–1220","c":"Chartres","p":"Francia","per":"media","est":"Gótico","esc":"edificio","tags":[],"d":"Reconstruida en apenas 26 años tras un incendio, lo que le da una unidad poco común. Conserva casi todos sus vitrales originales.","k":"El laberinto dibujado en el piso de la nave, recorrido por los peregrinos como un viaje simbólico.","co":[48.4478,1.4878],"img":1,"cr":"BT","lic":"Public domain","src":"https://commons.wikimedia.org/wiki/File:Westfassade_Chartres.jpg"},{"id":"zimbabwe","t":"Gran Zimbabue","a":"Pueblo shona","y":1300,"yd":"s. XI–XV","c":"Masvingo","p":"Zimbabue","per":"media","est":"Shona","esc":"ciudad","tags":[],"d":"Capital de un reino comercial del sur de África. Sus muros de granito, de hasta 11 m de alto, se levantaron sin mortero.","k":"La gran muralla curva del Gran Recinto y su torre cónica maciza, de uso todavía discutido.","co":[-20.27,30.933],"img":1,"cr":"autor en Commons","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:Great-Zimbabwe-6.jpg"},{"id":"alhambra","t":"Alhambra","a":"Dinastía nazarí","y":1350,"yd":"s. XIII–XIV","c":"Granada","p":"España","per":"media","est":"Nazarí","esc":"conjunto","tags":[],"d":"Ciudad palatina sobre una colina, con palacios, jardines y fortificaciones. Es la cumbre de la arquitectura islámica en la península ibérica.","k":"El Patio de los Leones: agua, luz y yeserías tan finas que el muro parece encaje.","co":[37.1763,-3.5882],"img":1,"cr":"Jebulon","lic":"CC0","src":"https://commons.wikimedia.org/wiki/File:Alhambra_detail.jpg"},{"id":"ciudadprohibida","t":"Ciudad Prohibida","a":"Kuai Xiang y otros (dinastía Ming)","y":1420,"yd":"1406–1420","c":"Pekín","p":"China","per":"moderna","est":"Imperial chino","esc":"conjunto","tags":[],"d":"Palacio imperial durante cinco siglos, con unos 980 edificios dentro de un recinto amurallado. Todo se ordena sobre un eje norte-sur.","k":"El techo: su forma, su color amarillo y la cantidad de figuras en las aristas indican el rango de cada edificio.","co":[39.9158,116.3908],"img":1,"cr":"N509FZ","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Hall_of_Supreme_Harmony_(20241127120000).jpg"},{"id":"brunelleschi","t":"Cúpula de Santa María del Fiore","a":"Filippo Brunelleschi","y":1436,"yd":"1420–1436","c":"Florencia","p":"Italia","per":"moderna","est":"Renacimiento","esc":"edificio","tags":[],"d":"Brunelleschi resolvió una cúpula que nadie sabía construir, sin cimbra de madera completa. Fue el inicio simbólico del Renacimiento.","k":"Ladrillos en espina de pez y dos cáscaras, una dentro de la otra, para que la cúpula se sostenga a sí misma mientras crece.","co":[43.7731,11.2569],"img":1,"cr":"Petar Milošević","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Florence_Duomo_from_Michelangelo_hill.jpg"},{"id":"machupicchu","t":"Machu Picchu","a":"Encargo de Pachacútec (incas)","y":1450,"yd":"c. 1450","c":"Cusco","p":"Perú","per":"moderna","est":"Inca","esc":"ciudad","tags":["latam"],"d":"Residencia real inca en una cresta andina a 2.430 m. Terrazas, templos y viviendas se adaptan a la montaña.","k":"La piedra inca encajada sin mortero, tan precisa que no entra un papel entre los bloques; resiste sismos.","co":[-13.1633,-72.5456],"img":1,"cr":"Draceane","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Machu_Picchu,_2023_(012).jpg"},{"id":"tempietto","t":"Tempietto de San Pietro in Montorio","a":"Donato Bramante","y":1502,"yd":"c. 1502","c":"Roma","p":"Italia","per":"moderna","est":"Alto Renacimiento","esc":"pabellon","tags":[],"d":"Pequeño templo circular en el lugar donde según la tradición fue crucificado San Pedro. Con apenas 4,5 m de diámetro interior, fue un manifiesto del Renacimiento.","k":"Un edificio diminuto que funciona como modelo ideal: planta circular, columnas dóricas y cúpula.","img":1,"cr":"Labicanense","lic":"CC BY 4.0","src":"https://commons.wikimedia.org/wiki/File:Tempietto_di_San_Pietro_in_Montorio.jpg"},{"id":"suleymaniye","t":"Mezquita de Solimán","a":"Mimar Sinan","y":1557,"yd":"1550–1557","c":"Estambul","p":"Turquía","per":"moderna","est":"Otomano clásico","esc":"conjunto","tags":[],"d":"Obra maestra del arquitecto imperial Sinan, que diseñó cientos de edificios. El complejo incluía escuelas, hospital, baños y cocina pública.","k":"Una cúpula central con semicúpulas escalonadas que bajan como una cascada hacia los minaretes.","co":[41.0161,28.9639],"img":1,"cr":"Hunanuk","lic":"CC0","src":"https://commons.wikimedia.org/wiki/File:S%C3%BCleymaniyeMosqueIstanbul_(cropped).jpg"},{"id":"rotonda","t":"Villa La Rotonda","a":"Andrea Palladio; terminada por Vincenzo Scamozzi","y":1590,"yd":"1567–c. 1590","c":"Vicenza","p":"Italia","per":"moderna","est":"Renacimiento palladiano","esc":"edificio","tags":[],"d":"Villa en lo alto de una colina con cuatro fachadas iguales, una hacia cada vista del paisaje. Fue copiada en todo el mundo, de Inglaterra a Estados Unidos.","k":"Simetría total: cuatro pórticos de templo griego aplicados a una casa.","co":[45.5315,11.5603],"img":1,"cr":"Quinok","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:07-Villa-Rotonda-Palladio.jpg"},{"id":"sanpedro","t":"Basílica de San Pedro","a":"Bramante, Miguel Ángel, Carlo Maderno y Gian Lorenzo Bernini","y":1626,"yd":"1506–1626","c":"Ciudad del Vaticano","p":"Vaticano","per":"moderna","est":"Renacimiento y Barroco","esc":"edificio","tags":[],"d":"Más de un siglo de obra y varios arquitectos. La cúpula es de Miguel Ángel y la plaza con columnatas de Bernini.","k":"La columnata de Bernini como dos brazos que abrazan a quien llega.","img":1,"cr":"Alvesgaspar","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Basilica_di_San_Pietro_in_Vaticano_September_2015-1a.jpg"},{"id":"isfahan","t":"Mezquita del Imán, Isfahán","a":"Ali Akbar Isfahani","y":1629,"yd":"1611–1629","c":"Isfahán","p":"Irán","per":"moderna","est":"Safávida","esc":"edificio","tags":[],"d":"Cubierta casi por completo de azulejos de siete colores. La entrada sobre la plaza está girada respecto de la mezquita para orientarla hacia La Meca.","k":"Los muqarnas: bóvedas de pequeñas celdas que descomponen la luz como un panal.","co":[32.6548,51.6778],"img":1,"cr":"autor en Commons","lic":"CC BY-SA 2.5","src":"https://commons.wikimedia.org/wiki/File:Naghsh-e-jahan_masjed-e-shah_esfahan.jpg"},{"id":"borromini","t":"San Carlo alle Quattro Fontane","a":"Francesco Borromini","y":1646,"yd":"1638–1646 (fachada 1677)","c":"Roma","p":"Italia","per":"moderna","est":"Barroco","esc":"edificio","tags":[],"d":"Una iglesia diminuta, del tamaño de un pilar de San Pedro, construida en una esquina estrecha. Toda la geometría se curva.","k":"La cúpula ovalada con casetones que se achican hacia arriba para parecer más alta.","co":[41.9018,12.4907],"img":1,"cr":"Architas","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:San_Carlo_alle_Quattro_Fontane_-_Front.jpg"},{"id":"tajmahal","t":"Taj Mahal","a":"Ustad Ahmad Lahauri (atribuido)","y":1653,"yd":"1632–1653","c":"Agra","p":"India","per":"moderna","est":"Mogol","esc":"conjunto","tags":[],"d":"Mausoleo que el emperador Shah Jahan construyó para su esposa Mumtaz Mahal. Mármol blanco con incrustaciones de piedras semipreciosas.","k":"Los minaretes se inclinan levemente hacia afuera: si un sismo los derribara, caerían lejos de la tumba.","co":[27.175,78.0419],"img":1,"cr":"Taj_Mahal,_Agra,_India_edit2.jpg: Yann; edited by King of Hearts derivative work","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:Taj_Mahal,_Agra,_India_edit3.jpg"},{"id":"katsura","t":"Villa Imperial Katsura","a":"Príncipes Toshihito y Toshitada","y":1660,"yd":"1615–c. 1660","c":"Kioto","p":"Japón","per":"moderna","est":"Sukiya japonés","esc":"conjunto","tags":[],"d":"Villa y jardín que Bruno Taut, Walter Gropius y otros modernos vieron como un antecedente de su propia arquitectura. Modulada por el tatami.","k":"Los pabellones escalonados en diagonal, que se abren al jardín con paneles corredizos.","co":[34.9839,135.7094],"img":1,"cr":"John Chang","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:Katsura_Imperial_Villa_in_Spring.jpg"},{"id":"sanignacio","t":"San Ignacio Miní","a":"Misioneros jesuitas y pueblo guaraní","y":1720,"yd":"s. XVII–XVIII","c":"Misiones","p":"Argentina","per":"moderna","est":"Barroco guaraní","esc":"ciudad","tags":["latam"],"d":"Ruinas de una de las reducciones jesuíticas guaraníes. Los pueblos se organizaban alrededor de una gran plaza con la iglesia como cabecera.","k":"La piedra arenisca roja tallada por artesanos guaraníes con motivos que mezclan el barroco europeo y la flora local.","co":[-27.2553,-55.5317],"img":1,"cr":"Loco085","lic":"CC BY-SA 2.5","src":"https://commons.wikimedia.org/wiki/File:Ruinas-san-ignacio.jpg"},{"id":"arcetsenans","t":"Salinas Reales de Arc-et-Senans","a":"Claude-Nicolas Ledoux","y":1779,"yd":"1775–1779","c":"Arc-et-Senans","p":"Francia","per":"industrial","est":"Neoclásico visionario","esc":"conjunto","tags":[],"d":"Fábrica de sal pensada como una ciudad ideal en semicírculo, con la casa del director en el centro. Una arquitectura que imagina cómo organizar el trabajo.","k":"Las columnas de tambores alternados cuadrados y redondos, y los relieves de agua salada petrificada.","co":[47.0328,5.7778],"img":1,"cr":"Stefan Kühn","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:Koenigliche_Saline_in_Arc-et-Senans_Bild1_800px.jpg"},{"id":"labrouste","t":"Biblioteca Sainte-Geneviève","a":"Henri Labrouste","y":1851,"yd":"1843–1851","c":"París","p":"Francia","per":"industrial","est":"Neogriego / hierro","esc":"edificio","tags":[],"d":"Una de las primeras grandes obras públicas en mostrar una estructura de hierro fundido en el interior. Afuera, piedra clásica; adentro, la nueva técnica.","k":"La sala de lectura con dos naves de bóvedas sostenidas por finos arcos de hierro calado.","img":1,"cr":"Marie-Lan Nguyen","lic":"CC BY 2.0 fr","src":"https://commons.wikimedia.org/wiki/File:Salle_de_lecture_Bibliotheque_Sainte-Genevieve_n03.jpg"},{"id":"eixample","t":"Ensanche de Barcelona","a":"Ildefons Cerdà","y":1859,"yd":"1859","c":"Barcelona","p":"España","per":"industrial","est":"Urbanismo higienista","esc":"ciudad","tags":[],"d":"Plan de expansión con una cuadrícula regular de manzanas de 113 m. Cerdà estudió el sol, la ventilación y el tránsito para una ciudad más sana.","k":"Las esquinas cortadas en ochava de las manzanas, que forman pequeñas plazas en cada cruce.","co":[41.392,2.1633],"img":1,"cr":"Alhzeiia","lic":"CC BY-SA 2.0","src":"https://commons.wikimedia.org/wiki/File:Eixample_aire_cropped.jpg"},{"id":"garnier","t":"Ópera Garnier","a":"Charles Garnier","y":1875,"yd":"1861–1875","c":"París","p":"Francia","per":"industrial","est":"Beaux-Arts / Segundo Imperio","esc":"edificio","tags":[],"d":"Teatro de ópera del París de Haussmann, pensado tanto para ver como para ser visto. Su gran escalera es el verdadero escenario social.","k":"La gran escalera de mármol de colores, donde el público se exhibe antes de la función.","co":[48.8719,2.3317],"img":1,"cr":"Alexander Hoernigk","lic":"CC BY 3.0","src":"https://commons.wikimedia.org/wiki/File:Paris_Palais_Garnier_2010-04-06_16.55.07.jpg"},{"id":"galleria","t":"Galería Vittorio Emanuele II","a":"Giuseppe Mengoni","y":1877,"yd":"1865–1877","c":"Milán","p":"Italia","per":"industrial","est":"Eclecticismo / hierro y vidrio","esc":"conjunto","tags":[],"d":"Una de las galerías comerciales cubiertas más antiguas del mundo, con forma de cruz. Une la plaza del Duomo con la de la Scala.","k":"La cúpula de hierro y vidrio en el cruce: una calle convertida en interior.","co":[45.4656,9.19],"img":1,"cr":"Paolobon140","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Veduta_della_Galleria_Vittorio_Emanuele_II_da_piazza_del_Duomo,_Milano.jpg"},{"id":"brooklyn","t":"Puente de Brooklyn","a":"John A. Roebling, Washington Roebling y Emily Warren Roebling","y":1883,"yd":"1869–1883","c":"Nueva York","p":"Estados Unidos","per":"industrial","est":"Ingeniería del siglo XIX","esc":"conjunto","tags":[],"d":"Al inaugurarse, el puente colgante más largo del mundo. Cuando Washington Roebling enfermó, su esposa Emily llevó adelante la dirección de la obra.","k":"Las torres de piedra con arcos neogóticos que sostienen una red de cables de acero.","co":[40.7057,-73.9963],"img":1,"cr":"Christian David","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Brooklyn_Bridge_and_the_Lower_Manhattan_skyline_from_Pebble_Beach,_New_York.jpg"},{"id":"sagrada","t":"Sagrada Familia","a":"Antoni Gaudí","y":1882,"yd":"1882–en obra","c":"Barcelona","p":"España","per":"industrial","est":"Modernismo catalán","esc":"edificio","tags":[],"d":"Gaudí trabajó en ella más de 40 años y sabía que no la vería terminada. Sigue en construcción con métodos digitales.","k":"Las columnas que se ramifican como árboles: Gaudí calculó las formas con maquetas colgantes de cuerdas y pesos.","co":[41.4037,2.1743],"img":1,"cr":"Canaan","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:SF_maig_2026.jpg"},{"id":"laplata","t":"Ciudad de La Plata","a":"Pedro Benoit (plan urbano)","y":1882,"yd":"1882","c":"La Plata","p":"Argentina","per":"industrial","est":"Urbanismo higienista","esc":"ciudad","tags":["latam"],"d":"Capital provincial fundada desde cero y trazada de una sola vez. Un cuadrado con diagonales y una plaza cada seis cuadras.","k":"El eje monumental que une los edificios públicos y las diagonales que cruzan la cuadrícula.","co":[-34.9333,-57.95],"img":1,"cr":"Fungilover22","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Plano_fundacional.jpg"},{"id":"eiffel","t":"Torre Eiffel","a":"Gustave Eiffel, Maurice Koechlin, Émile Nouguier y Stephen Sauvestre","y":1889,"yd":"1887–1889","c":"París","p":"Francia","per":"industrial","est":"Ingeniería del hierro","esc":"conjunto","tags":[],"d":"Construida para la Exposición Universal de 1889 y criticada por muchos artistas de su época. Hoy es el símbolo de París.","k":"La curva de las patas sigue el cálculo de la fuerza del viento: es forma resultante de la ingeniería.","co":[48.8583,2.2945],"img":1,"cr":"Benh LIEU SONG","lic":"Public domain","src":"https://commons.wikimedia.org/wiki/File:Tour_Eiffel_Wikimedia_Commons.jpg"},{"id":"wainwright","t":"Wainwright Building","a":"Louis Sullivan y Dankmar Adler","y":1891,"yd":"1890–1891","c":"San Luis","p":"Estados Unidos","per":"industrial","est":"Escuela de Chicago","esc":"edificio","tags":[],"d":"Uno de los primeros rascacielos de estructura metálica. Sullivan lo usó para pensar qué aspecto debía tener un edificio alto.","k":"Base, fuste y remate como una columna clásica: 'la forma sigue a la función'.","co":[38.6269,-90.1922],"img":1,"cr":"autor en Commons","lic":"Public domain","src":"https://commons.wikimedia.org/wiki/File:Wainwright_building_st_louis_USA.jpg"},{"id":"batllo","t":"Casa Batlló","a":"Antoni Gaudí","y":1906,"yd":"1904–1906","c":"Barcelona","p":"España","per":"industrial","est":"Modernismo catalán","esc":"edificio","tags":[],"d":"Reforma total de un edificio existente en el Paseo de Gracia. Fachada ondulada, balcones como máscaras y un techo que evoca el lomo de un dragón.","k":"El patio de luces con azulejos que van de azul oscuro arriba a claro abajo, para repartir la luz por igual.","co":[41.3916,2.1649],"img":1,"cr":"ChristianSchd","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:Casa_Batllo_Overview_Barcelona_Spain_cut.jpg"},{"id":"colon","t":"Teatro Colón","a":"Francesco Tamburini, Vittorio Meano y Jules Dormal","y":1908,"yd":"1889–1908","c":"Buenos Aires","p":"Argentina","per":"industrial","est":"Eclecticismo","esc":"edificio","tags":["latam"],"d":"Una de las salas de ópera con mejor acústica del mundo. Pasaron tres arquitectos por la obra durante casi 20 años.","k":"La sala en herradura con siete niveles de palcos y la cúpula pintada por Raúl Soldi en 1966.","co":[-34.6011,-58.3831],"img":1,"cr":"EEJCC","lic":"CC0","src":"https://commons.wikimedia.org/wiki/File:Fachada_del_Teatro_Col%C3%B3n_en_Buenos_Aires,_Argentina.jpg"},{"id":"barolo","t":"Palacio Barolo","a":"Mario Palanti","y":1923,"yd":"1919–1923","c":"Buenos Aires","p":"Argentina","per":"s20","est":"Eclecticismo","esc":"edificio","tags":["latam"],"d":"Fue el edificio más alto de Sudamérica al inaugurarse. Su diseño está inspirado en la Divina Comedia de Dante: infierno, purgatorio y paraíso.","k":"El faro en la cúpula, que se comunicaba con el Palacio Salvo, obra gemela de Palanti en Montevideo.","co":[-34.6096,-58.3859],"img":1,"cr":"Eugenio Hansen, OFS","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Palacio_Barolo_10.jpg"},{"id":"schroder","t":"Casa Rietveld Schröder","a":"Gerrit Rietveld y Truus Schröder-Schräder","y":1924,"yd":"1924","c":"Utrecht","p":"Países Bajos","per":"s20","est":"De Stijl","esc":"pabellon","tags":["mujer"],"d":"Casa diseñada junto con su clienta, Truus Schröder, que definió cómo quería vivir. Es la arquitectura del movimiento De Stijl hecha realidad.","k":"El piso alto sin paredes fijas: paneles corredizos lo transforman de un espacio abierto a varios cuartos.","co":[52.0853,5.1476],"img":1,"cr":"User:Husky","lic":"CC BY 3.0","src":"https://commons.wikimedia.org/wiki/File:Rietveld_Schr%C3%B6derhuis_HayKranen-20.JPG"},{"id":"frankfurt","t":"Cocina de Frankfurt","a":"Margarete Schütte-Lihotzky","y":1926,"yd":"1926","c":"Fráncfort","p":"Alemania","per":"s20","est":"Nueva Objetividad","esc":"objeto","tags":["mujer"],"d":"Cocina mínima y racional diseñada para la vivienda social, de la que se instalaron unas 10.000. Es el antecedente directo de la cocina integrada moderna.","k":"Cada movimiento estudiado como en una fábrica: cajones de aluminio rotulados, tabla plegable y todo a mano en 1,9 × 3,4 m.","img":1,"cr":"autor en Commons","lic":"Public domain","src":"https://commons.wikimedia.org/wiki/File:Frankfurterkueche.jpg"},{"id":"bauhaus","t":"Edificio de la Bauhaus","a":"Walter Gropius","y":1926,"yd":"1925–1926","c":"Dessau","p":"Alemania","per":"s20","est":"Movimiento Moderno","esc":"edificio","tags":[],"d":"Sede de la escuela que unió arte, artesanía e industria. Su planta en molinete no tiene una fachada principal: hay que rodearlo.","k":"La fachada de vidrio del bloque de talleres, separada de la estructura como una piel.","co":[51.8392,12.2267],"img":1,"cr":"A.Savin","lic":"FAL","src":"https://commons.wikimedia.org/wiki/File:Dessau_Bauhaus-Geb%C3%A4ude_asv2024-06_img1.jpg"},{"id":"e1027","t":"Villa E-1027","a":"Eileen Gray con Jean Badovici","y":1929,"yd":"1926–1929","c":"Roquebrune-Cap-Martin","p":"Francia","per":"s20","est":"Movimiento Moderno","esc":"pabellon","tags":["mujer"],"d":"Casa junto al Mediterráneo diseñada por la diseñadora irlandesa Eileen Gray, con muebles hechos para cada lugar. Durante décadas se la atribuyó por error a otros.","k":"Los muebles como arquitectura: mesas regulables, biombos y armarios que organizan el espacio.","co":[43.7599,7.4632],"img":1,"cr":"Tangopaso","lic":"Public domain","src":"https://commons.wikimedia.org/wiki/File:Sea_shore_at_Roquebrune.jpg"},{"id":"barcelona","t":"Pabellón de Barcelona","a":"Ludwig Mies van der Rohe y Lilly Reich","y":1929,"yd":"1929 (reconstruido 1986)","c":"Barcelona","p":"España","per":"s20","est":"Movimiento Moderno","esc":"pabellon","tags":["mujer"],"d":"Pabellón alemán de la Exposición Internacional, desmontado al terminar y reconstruido en 1986. Lilly Reich fue codiseñadora, incluida la silla Barcelona.","k":"Planos sueltos de mármol, ónix y vidrio que guían el recorrido sin cerrar nunca una habitación.","co":[41.3706,2.15],"img":1,"cr":"Ashley Pomeroy at English Wikipedia","lic":"CC BY 3.0","src":"https://commons.wikimedia.org/wiki/File:The_Barcelona_Pavilion,_Barcelona,_2010.jpg"},{"id":"savoye","t":"Villa Savoye","a":"Le Corbusier y Pierre Jeanneret","y":1931,"yd":"1928–1931","c":"Poissy","p":"Francia","per":"s20","est":"Movimiento Moderno","esc":"pabellon","tags":[],"d":"La demostración de los 'cinco puntos de una nueva arquitectura' de Le Corbusier. Una caja blanca que parece flotar sobre el pasto.","k":"Pilotis, planta libre, fachada libre, ventana corrida y terraza jardín: buscalos todos.","co":[48.9244,2.0283],"nf":"Las obras de Le Corbusier en Francia siguen protegidas por derechos de autor hasta 2036, por eso no hay fotos libres de esta obra."},{"id":"kavanagh","t":"Edificio Kavanagh","a":"Gregorio Sánchez, Ernesto Lagos y Luis María de la Torre","y":1936,"yd":"1934–1936","c":"Buenos Aires","p":"Argentina","per":"s20","est":"Racionalismo / Art déco","esc":"edificio","tags":["latam"],"d":"Al inaugurarse, la estructura de hormigón armado más alta del mundo. Lo encargó Corina Kavanagh, una de las pocas mujeres desarrolladoras inmobiliarias de su época.","k":"Los volúmenes escalonados que se afinan hacia arriba como un transatlántico vertical.","co":[-34.5954,-58.3747],"img":1,"cr":"Marcos Prack","lic":"CC BY 2.0","src":"https://commons.wikimedia.org/wiki/File:Kavanagh_building.jpg"},{"id":"fallingwater","t":"Casa de la Cascada","a":"Frank Lloyd Wright","y":1937,"yd":"1936–1937","c":"Mill Run, Pensilvania","p":"Estados Unidos","per":"s20","est":"Arquitectura orgánica","esc":"pabellon","tags":[],"d":"Casa construida sobre una cascada en lugar de frente a ella. Las terrazas de hormigón vuelan sobre el arroyo.","k":"La roca del lugar aflora en el piso del living, junto a la chimenea: la casa crece desde el paisaje.","co":[39.9064,-79.4681],"img":1,"cr":"Carol M. Highsmith","lic":"Public domain","src":"https://commons.wikimedia.org/wiki/File:Fallingwater_2007.jpg"},{"id":"bkf","t":"Silla BKF","a":"Antonio Bonet, Juan Kurchan y Jorge Ferrari Hardoy","y":1938,"yd":"1938","c":"Buenos Aires","p":"Argentina","per":"s20","est":"Movimiento Moderno","esc":"objeto","tags":["latam"],"d":"Diseñada en Buenos Aires por tres arquitectos del Grupo Austral y copiada millones de veces como 'silla mariposa'. El MoMA la incluyó en su colección.","k":"Una sola varilla de hierro doblada y un cuero que cuelga: la estructura mínima.","img":1,"cr":"Kippelboy","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:BKF_Chair.jpg"},{"id":"mairea","t":"Villa Mairea","a":"Alvar Aalto","y":1939,"yd":"1937–1939","c":"Noormarkku","p":"Finlandia","per":"s20","est":"Modernismo nórdico","esc":"pabellon","tags":[],"d":"Casa para una familia de coleccionistas en medio del bosque finlandés. Combina la abstracción moderna con madera, piedra y tradición local.","k":"Las columnas de acero envueltas en varillas de madera y mimbre, como troncos en el bosque.","co":[61.5975,21.8745],"img":1,"cr":"Ninara from Helsinki, Finland","lic":"CC BY 2.0","src":"https://commons.wikimedia.org/wiki/File:4Y1A7841_Alvar_Aalto,_Finland_(26710745140).jpg"},{"id":"capanema","t":"Palacio Gustavo Capanema","a":"Lúcio Costa, Oscar Niemeyer, Affonso Reidy y equipo; consultor Le Corbusier","y":1945,"yd":"1936–1945","c":"Río de Janeiro","p":"Brasil","per":"s20","est":"Movimiento Moderno","esc":"edificio","tags":["latam","pritzker"],"d":"Antiguo Ministerio de Educación, uno de los primeros rascacielos modernos del mundo. Fue la escuela del joven Niemeyer.","k":"Los parasoles móviles en la fachada norte y los murales de azulejos de Candido Portinari.","co":[-22.9092,-43.1738],"img":1,"cr":"Imagens AMB","lic":"Public domain","src":"https://commons.wikimedia.org/wiki/File:MESP4.jpg"},{"id":"puente","t":"Casa sobre el Arroyo","a":"Amancio Williams","y":1946,"yd":"1943–1946","c":"Mar del Plata","p":"Argentina","per":"s20","est":"Movimiento Moderno","esc":"pabellon","tags":["latam"],"d":"Casa-puente apoyada en una sola bóveda de hormigón sobre el arroyo Las Chacras. Fue encargada por el padre de Amancio, el compositor Alberto Williams.","k":"La casa ES el puente: un arco que cruza el agua y libera el suelo del parque.","img":1,"cr":"Claudio Elias","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Casa_del_Puente_MDP.jpg"},{"id":"hearst","t":"Castillo Hearst","a":"Julia Morgan","y":1947,"yd":"1919–1947","c":"San Simeón, California","p":"Estados Unidos","per":"s20","est":"Eclecticismo / Renacimiento español","esc":"conjunto","tags":["mujer"],"d":"Residencia del magnate William Randolph Hearst, proyectada durante casi 30 años. Julia Morgan fue la primera mujer en recibirse de arquitecta en la École des Beaux-Arts de París y diseñó más de 700 edificios.","k":"La piscina Neptuno, con un templo romano reconstruido junto al agua.","co":[35.6853,-121.1678],"img":1,"cr":"No machine-readable author provided. Urban~commonswiki assumed (based on copyrig","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:Hearst_Castle_Casa_Grande1.jpg"},{"id":"casabarragan","t":"Casa Luis Barragán","a":"Luis Barragán","y":1948,"yd":"1948","c":"Ciudad de México","p":"México","per":"s20","est":"Modernismo mexicano","esc":"pabellon","tags":["latam","pritzker"],"d":"La casa y estudio donde vivió Barragán, cerrada a la calle y abierta hacia un jardín. Patrimonio de la Humanidad.","k":"La escalera de madera sin baranda que flota contra un muro blanco, y los muros de color rosa, amarillo y azul.","co":[19.4111,-99.1925],"img":1,"cr":"Ymblanter","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:Luis_Barragan_House_exterior_02.jpg"},{"id":"glasshouse","t":"Casa de Vidrio (Glass House)","a":"Philip Johnson","y":1949,"yd":"1949","c":"New Canaan, Connecticut","p":"Estados Unidos","per":"s20","est":"Estilo Internacional","esc":"pabellon","tags":["pritzker"],"d":"Casa de paredes de vidrio en medio de un parque, inspirada en la Casa Farnsworth de Mies. Johnson fue el primer ganador del Pritzker en 1979.","k":"El único volumen cerrado es un cilindro de ladrillo con el baño; todo lo demás es paisaje.","img":1,"cr":"Carol M. Highsmith","lic":"Public domain","src":"https://commons.wikimedia.org/wiki/File:Glass_House_2006.jpg"},{"id":"eames","t":"Casa Eames","a":"Charles y Ray Eames","y":1949,"yd":"1949","c":"Los Ángeles","p":"Estados Unidos","per":"s20","est":"Modernismo de posguerra","esc":"pabellon","tags":["mujer"],"d":"Casa Study House N.º 8, armada con piezas industriales de catálogo. Ray Eames, artista y diseñadora, aportó el color y la composición.","k":"Una fachada como un cuadro de Mondrian: paneles de colores en un marco de acero estándar.","co":[34.0297,-118.5194],"img":1,"cr":"ercwttmn","lic":"CC BY 2.0","src":"https://commons.wikimedia.org/wiki/File:Eames_House0.jpg"},{"id":"farnsworth","t":"Casa Farnsworth","a":"Ludwig Mies van der Rohe","y":1951,"yd":"1945–1951","c":"Plano, Illinois","p":"Estados Unidos","per":"s20","est":"Estilo Internacional","esc":"pabellon","tags":[],"d":"Casa de fin de semana para la médica Edith Farnsworth, que terminó en juicio con el arquitecto. Una caja de vidrio elevada sobre el terreno inundable.","k":"Las columnas blancas soldadas por fuera de las vigas, sin que se vea ninguna unión.","co":[41.635,-88.5357],"img":1,"cr":"Victor Grigas","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:Farnsworth_House_by_Mies_Van_Der_Rohe_-_exterior-8.jpg"},{"id":"casavidro","t":"Casa de Vidro","a":"Lina Bo Bardi","y":1951,"yd":"1951","c":"São Paulo","p":"Brasil","per":"s20","est":"Modernismo brasileño","esc":"pabellon","tags":["latam","mujer"],"d":"La casa donde vivió Lina Bo Bardi, entonces en las afueras de São Paulo. La selva fue creciendo hasta rodearla por completo.","k":"El salón de vidrio en voladizo sobre pilotes finos, con un árbol que atraviesa un patio en el centro.","img":1,"cr":"Monica Kaneko from Sao Paulo, Brasil","lic":"CC BY-SA 2.0","src":"https://commons.wikimedia.org/wiki/File:Casa_de_Vidro_-_Instituto_Bardi_01.jpg"},{"id":"lever","t":"Lever House","a":"Gordon Bunshaft y Natalie de Blois (SOM)","y":1952,"yd":"1950–1952","c":"Nueva York","p":"Estados Unidos","per":"s20","est":"Estilo Internacional","esc":"edificio","tags":["pritzker","mujer"],"d":"Uno de los primeros rascacielos de muro cortina de vidrio en Nueva York. Natalie de Blois fue una de las diseñadoras clave del proyecto.","k":"Una lámina vertical sobre un bloque bajo que deja libre una plaza pública en planta baja.","co":[40.7597,-73.9728],"img":1,"cr":"Beyond My Ken","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Lever_House_390_Park_Avenue.jpg"},{"id":"unite","t":"Unidad Habitacional de Marsella","a":"Le Corbusier","y":1952,"yd":"1947–1952","c":"Marsella","p":"Francia","per":"s20","est":"Brutalismo","esc":"conjunto","tags":[],"d":"Una 'ciudad vertical' de 337 departamentos con calle comercial interior y escuela en la terraza. Modelo de miles de bloques de vivienda en el mundo.","k":"Los departamentos dúplex encajados como botellas en un botellero, y la terraza escultórica.","img":1,"cr":"Anapuig","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:Unit%C3%A9_d%27Habitation_de_Marseille_4.JPG"},{"id":"ucv","t":"Aula Magna, Ciudad Universitaria de Caracas","a":"Carlos Raúl Villanueva; nubes de Alexander Calder","y":1953,"yd":"1952–1953","c":"Caracas","p":"Venezuela","per":"s20","est":"Modernismo latinoamericano","esc":"conjunto","tags":["latam"],"d":"El campus integra arquitectura, pintura y escultura en lo que Villanueva llamó 'síntesis de las artes'. Patrimonio de la Humanidad.","k":"Las 'nubes' acústicas de Calder suspendidas del techo del Aula Magna: arte que también corrige el sonido.","img":1,"cr":"Caracas1830","lic":"CC BY 3.0","src":"https://commons.wikimedia.org/wiki/File:Aula_Magna-Calder-UCV.JPG"},{"id":"curutchet","t":"Casa Curutchet","a":"Le Corbusier; dirección de obra Amancio Williams","y":1953,"yd":"1949–1953","c":"La Plata","p":"Argentina","per":"s20","est":"Movimiento Moderno","esc":"pabellon","tags":["latam"],"d":"La única obra de Le Corbusier en América Latina construida según su proyecto: casa y consultorio de un cirujano. Le Corbusier nunca la visitó.","k":"La rampa que conecta consultorio y vivienda alrededor de un árbol, y el parasol de hormigón hacia el parque.","co":[-34.9113,-57.9419],"img":1,"cr":"Danielsantiago9128","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:Casa_Curutchet_1..JPG"},{"id":"ronchamp","t":"Capilla de Ronchamp","a":"Le Corbusier","y":1955,"yd":"1950–1955","c":"Ronchamp","p":"Francia","per":"s20","est":"Modernismo escultórico","esc":"edificio","tags":[],"d":"Una capilla de peregrinación que rompe con la caja moderna. El techo curvo parece una vela o un caparazón.","k":"Una franja de luz entre el muro y el techo, y ventanas de colores incrustadas en un muro grueso.","nf":"Las obras de Le Corbusier en Francia siguen protegidas por derechos de autor hasta 2036, por eso no hay fotos libres de esta obra."},{"id":"mamrio","t":"Museo de Arte Moderno de Río","a":"Affonso Eduardo Reidy; paisajismo de Roberto Burle Marx","y":1958,"yd":"1953–1967","c":"Río de Janeiro","p":"Brasil","per":"s20","est":"Modernismo brasileño","esc":"edificio","tags":["latam"],"d":"El museo frente a la bahía de Guanabara, en el parque de Flamengo. Los pórticos inclinados liberan la planta baja como continuación del parque.","k":"Los pórticos de hormigón en forma de V que sostienen toda la sala de exposiciones sin columnas interiores.","co":[-22.9138,-43.1718],"img":1,"cr":"Imagens AMB","lic":"Public domain","src":"https://commons.wikimedia.org/wiki/File:Museu_de_Arte_Moderna,_Rio_de_Janeiro_(2001).jpg"},{"id":"manantiales","t":"Restaurante Los Manantiales","a":"Félix Candela con Joaquín y Fernando Álvarez Ordóñez","y":1958,"yd":"1958","c":"Xochimilco, Ciudad de México","p":"México","per":"s20","est":"Cascarones de hormigón","esc":"edificio","tags":["latam"],"d":"Una flor de ocho pétalos hecha con una cáscara de hormigón de apenas 4 cm de espesor. Candela fue el gran maestro de los paraboloides hiperbólicos.","k":"Cada pétalo es un paraboloide hiperbólico: una superficie curva que se construye con tablas rectas.","img":1,"cr":"Dge","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:Restaurante_Los_Manantiales_02.jpg"},{"id":"seagram","t":"Seagram Building","a":"Ludwig Mies van der Rohe y Philip Johnson","y":1958,"yd":"1954–1958","c":"Nueva York","p":"Estados Unidos","per":"s20","est":"Estilo Internacional","esc":"edificio","tags":["pritzker"],"d":"El rascacielos que fijó el modelo de torre corporativa. Se retira de la avenida para dejar una plaza pública.","k":"Los perfiles de bronce en la fachada no son estructura: son ornamento que expresa la estructura escondida.","co":[40.7584,-73.9721],"img":1,"cr":"Max Hermus at Dutch Wikipedia","lic":"Public domain","src":"https://commons.wikimedia.org/wiki/File:Seagrambuilding.JPG"},{"id":"satelite","t":"Torres de Satélite","a":"Luis Barragán y Mathias Goeritz","y":1958,"yd":"1958","c":"Naucalpan, Estado de México","p":"México","per":"s20","est":"Arquitectura emocional","esc":"conjunto","tags":["latam","pritzker"],"d":"Cinco prismas triangulares de colores, de hasta 52 m, como puerta de una nueva ciudad satélite. Escultura urbana vista desde el auto.","k":"Cambian de forma según desde dónde se las mire mientras uno pasa por la autopista.","co":[19.4992,-99.2369],"img":1,"cr":"ProtoplasmaKid","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Torres_de_Sat%C3%A9lite_-_2.jpg"},{"id":"guggenheimny","t":"Museo Guggenheim de Nueva York","a":"Frank Lloyd Wright","y":1959,"yd":"1943–1959","c":"Nueva York","p":"Estados Unidos","per":"s20","est":"Arquitectura orgánica","esc":"edificio","tags":[],"d":"Un museo que es una rampa continua en espiral alrededor de un vacío central. Se recorre bajando desde arriba.","k":"La espiral se ensancha hacia arriba, al revés que un zigurat.","co":[40.7831,-73.9589],"img":1,"cr":"Jean-Christophe BENOIST","lic":"CC BY 3.0","src":"https://commons.wikimedia.org/wiki/File:NYC_-_Guggenheim_Museum.jpg"},{"id":"brasilia","t":"Plan Piloto de Brasilia","a":"Lúcio Costa (urbanismo) y Oscar Niemeyer (edificios)","y":1960,"yd":"1956–1960","c":"Brasilia","p":"Brasil","per":"s20","est":"Urbanismo moderno","esc":"ciudad","tags":["latam","pritzker"],"d":"Capital construida en el interior de Brasil en menos de cuatro años. Su plano, en forma de avión o cruz, separa el eje monumental del eje residencial.","k":"Las supercuadras: bloques de vivienda sobre pilotes con escuela y comercio a distancia caminable.","co":[-15.7939,-47.8828],"img":1,"cr":"Arturdiasr","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Planalto_Central_(cropped).jpg"},{"id":"congreso","t":"Congreso Nacional de Brasil","a":"Oscar Niemeyer","y":1960,"yd":"1958–1960","c":"Brasilia","p":"Brasil","per":"s20","est":"Modernismo brasileño","esc":"edificio","tags":["latam","pritzker"],"d":"Dos torres de oficinas y dos cúpulas, una hacia arriba (Senado) y otra invertida (Cámara de Diputados). Niemeyer ganó el Pritzker en 1988.","k":"La cúpula hacia abajo y la cúpula hacia arriba: geometría simple usada como símbolo.","co":[-15.7997,-47.8642],"img":1,"cr":"P - A - S","lic":"CC BY-SA 2.0","src":"https://commons.wikimedia.org/wiki/File:Congresso_do_Brasil.jpg"},{"id":"dieste","t":"Iglesia de Cristo Obrero","a":"Eladio Dieste","y":1960,"yd":"1958–1960","c":"Atlántida","p":"Uruguay","per":"s20","est":"Cerámica armada","esc":"edificio","tags":["latam"],"d":"El ingeniero Eladio Dieste inventó la cerámica armada: ladrillo con poco acero. Patrimonio de la Humanidad desde 2021.","k":"Muros ondulados que se vuelven más curvos hacia arriba hasta encontrarse con el techo, también ondulado.","img":1,"cr":"Nicolas Barriola","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:Iglesia_Atl%C3%A1ntida_Dieste_7.jpg"},{"id":"chandigarh","t":"Complejo del Capitolio, Chandigarh","a":"Le Corbusier con Pierre Jeanneret, Jane Drew y Maxwell Fry","y":1962,"yd":"1952–1962","c":"Chandigarh","p":"India","per":"s20","est":"Brutalismo","esc":"ciudad","tags":["mujer"],"d":"La nueva capital del Punyab tras la independencia de la India. Jane Drew diseñó viviendas y escuelas de la ciudad.","k":"La Mano Abierta, escultura monumental y símbolo de la ciudad: 'abierta para dar, abierta para recibir'.","img":1,"cr":"duncid","lic":"CC BY-SA 2.0","src":"https://commons.wikimedia.org/wiki/File:Palace_of_Assembly_Chandigarh_2006.jpg"},{"id":"nordic","t":"Pabellón Nórdico de Venecia","a":"Sverre Fehn","y":1962,"yd":"1962","c":"Venecia","p":"Italia","per":"s20","est":"Modernismo nórdico","esc":"pabellon","tags":["pritzker"],"d":"Pabellón de los países nórdicos en la Bienal de Venecia. Fehn no taló los árboles: los dejó atravesar el techo.","k":"Una trama doble de vigas finas de hormigón que filtra la luz del sur como si fuera luz nórdica, sin sombras.","img":1,"cr":"Jean-Pierre Dalbéra from Paris, France","lic":"CC BY 2.0","src":"https://commons.wikimedia.org/wiki/File:Le_pavillon_des_pays_nordiques_(Giardini,_Venise)_(6440931233).jpg"},{"id":"antropologia","t":"Museo Nacional de Antropología","a":"Pedro Ramírez Vázquez, Jorge Campuzano y Rafael Mijares","y":1964,"yd":"1963–1964","c":"Ciudad de México","p":"México","per":"s20","est":"Modernismo mexicano","esc":"edificio","tags":["latam"],"d":"Construido en 19 meses para mostrar las culturas prehispánicas de México. Las salas se ordenan alrededor de un gran patio.","k":"'El Paraguas': una enorme cubierta apoyada en una sola columna de bronce de la que cae una cortina de agua.","co":[19.4261,-99.1861],"img":1,"cr":"kornemuz","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:Musee_National_Anthropologie-Entree.jpg"},{"id":"venturi","t":"Casa Vanna Venturi","a":"Robert Venturi","y":1964,"yd":"1962–1964","c":"Filadelfia","p":"Estados Unidos","per":"s20","est":"Posmodernismo","esc":"pabellon","tags":["pritzker"],"d":"La casa que Venturi diseñó para su madre, considerada uno de los primeros edificios posmodernos. Aplica las ideas de su libro 'Complejidad y contradicción'.","k":"Un frontón partido al medio, como el dibujo de casa de un niño, con un arco que es solo decoración.","co":[40.0707,-75.2081],"img":1,"cr":"Carol M. Highsmith","lic":"Public domain","src":"https://commons.wikimedia.org/wiki/File:Vanna_Venturi_House_in_Chestnut_Hill,_Philadelphia,_Pennsylvania_LCCN2011631329.tif"},{"id":"yoyogi","t":"Gimnasio Nacional Yoyogi","a":"Kenzō Tange","y":1964,"yd":"1961–1964","c":"Tokio","p":"Japón","per":"s20","est":"Metabolismo / estructuras colgantes","esc":"edificio","tags":["pritzker"],"d":"Construido para los Juegos Olímpicos de Tokio 1964, con un techo colgante de cables de acero. Tange ganó el Pritzker en 1987.","k":"El techo cuelga de dos cables principales como un puente colgante, y sus curvas recuerdan los templos japoneses.","img":1,"cr":"Arne Müseler","lic":"CC BY-SA 3.0 de","src":"https://commons.wikimedia.org/wiki/File:Kokuritsu_Yoyogi_Ky%C5%8Dgij%C5%8D_1.jpg"},{"id":"salk","t":"Instituto Salk","a":"Louis Kahn","y":1965,"yd":"1959–1965","c":"La Jolla, California","p":"Estados Unidos","per":"s20","est":"Modernismo monumental","esc":"conjunto","tags":[],"d":"Laboratorios de investigación frente al océano Pacífico. Luis Barragán aconsejó dejar la plaza vacía, como 'una fachada al cielo'.","k":"El canal de agua que divide la plaza de travertino y apunta directo al horizonte del mar.","co":[32.8875,-117.2464],"img":1,"cr":"Jason Taellious from Olympia, USA","lic":"CC BY-SA 2.0","src":"https://commons.wikimedia.org/wiki/File:Salk_Institute_(4).jpg"},{"id":"copan","t":"Edificio Copan","a":"Oscar Niemeyer","y":1966,"yd":"1952–1966","c":"São Paulo","p":"Brasil","per":"s20","est":"Modernismo brasileño","esc":"edificio","tags":["latam","pritzker"],"d":"Uno de los edificios residenciales más grandes de Latinoamérica, con más de 1.100 departamentos y unos 5.000 habitantes. Tiene hasta código postal propio.","k":"La gran S de parasoles horizontales que se curva sobre la manzana.","img":1,"cr":"Pablo Trincado","lic":"CC BY 2.0","src":"https://commons.wikimedia.org/wiki/File:Edif%C3%ADcio_Copan_-_frente.jpg"},{"id":"leca","t":"Piscinas de Leça da Palmeira","a":"Álvaro Siza","y":1966,"yd":"1961–1966","c":"Matosinhos","p":"Portugal","per":"s20","est":"Regionalismo crítico","esc":"conjunto","tags":["pritzker"],"d":"Piscinas de agua de mar construidas entre las rocas de la costa atlántica. Siza tenía menos de 30 años cuando las proyectó.","k":"Muros de hormigón que solo completan lo que las rocas casi cerraban: la arquitectura casi desaparece.","img":1,"cr":"Mark from San Francisco, CA, USA","lic":"CC BY-SA 2.0","src":"https://commons.wikimedia.org/wiki/File:Piscina_Mares_(Leca_Palmeira).jpg"},{"id":"bancolondres","t":"Banco de Londres y América del Sud","a":"Clorindo Testa con SEPRA","y":1966,"yd":"1960–1966","c":"Buenos Aires","p":"Argentina","per":"s20","est":"Brutalismo","esc":"edificio","tags":["latam"],"d":"Edificio bancario en el centro histórico de Buenos Aires, hoy Banco Hipotecario. Reinterpreta las arcadas de la cuadra con hormigón expuesto.","k":"La planta baja como una gran sala pública sin columnas interiores, con pisos colgados a distintas alturas.","img":1,"cr":"M47E.62M","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Banco_de_Londres_y_Am%C3%A9rica_del_Sur.jpg"},{"id":"habitat67","t":"Habitat 67","a":"Moshe Safdie","y":1967,"yd":"1967","c":"Montreal","p":"Canadá","per":"s20","est":"Brutalismo / Metabolismo","esc":"conjunto","tags":[],"d":"Proyecto de tesis de Safdie construido para la Expo 67. Vivienda en la ciudad con los beneficios de una casa con jardín.","k":"354 módulos prefabricados de hormigón apilados de modo que cada techo es la terraza del vecino.","co":[45.5,-73.5439],"img":1,"cr":"Parcours riverain - Ville de Montréal from Canada","lic":"CC BY 2.0","src":"https://commons.wikimedia.org/wiki/File:Habitat_67,_2600,_avenue_Pierre-Dupuy_(Ville-Marie)_(35399872943).jpg"},{"id":"masp","t":"MASP","a":"Lina Bo Bardi","y":1968,"yd":"1957–1968","c":"São Paulo","p":"Brasil","per":"s20","est":"Brutalismo","esc":"edificio","tags":["latam","mujer"],"d":"El museo flota sobre una plaza pública gracias a dos pórticos rojos con una luz libre de 74 m. Lina expuso los cuadros sobre caballetes de vidrio.","k":"El 'vano libre' debajo del museo, que se usa para feria, protestas y conciertos.","co":[-23.5611,-46.6558],"img":1,"cr":"ProtoplasmaKid","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Vista_a%C3%A9rea_de_la_Avenida_Paulista_de_S%C3%A3o_Paulo_05.jpg"},{"id":"neviges","t":"Iglesia de peregrinación de Neviges","a":"Gottfried Böhm","y":1968,"yd":"1966–1968","c":"Velbert","p":"Alemania","per":"s20","est":"Expresionismo brutalista","esc":"edificio","tags":["pritzker"],"d":"Una montaña de hormigón plegado para miles de peregrinos. Böhm fue el primer alemán en ganar el Pritzker, en 1986.","k":"El techo cristalino como roca facetada, y las calles interiores que continúan el camino del peregrino.","img":1,"cr":"Rabanus Flavus","lic":"Public domain","src":"https://commons.wikimedia.org/wiki/File:Neviges_Mariendom.jpg"},{"id":"ford","t":"Fundación Ford","a":"Kevin Roche y John Dinkeloo","y":1968,"yd":"1963–1968","c":"Nueva York","p":"Estados Unidos","per":"s20","est":"Modernismo tardío","esc":"edificio","tags":["pritzker"],"d":"Oficinas organizadas alrededor de un jardín cubierto de 12 pisos. Fue uno de los primeros atrios verdes en un edificio de oficinas.","k":"Las oficinas miran al jardín interior y entre sí: el edificio expresa una comunidad de trabajo.","co":[40.7497,-73.9711],"img":1,"cr":"Stakhanov","lic":"CC BY 3.0","src":"https://commons.wikimedia.org/wiki/File:Ford_foundation_building_1.JPG"},{"id":"fauusp","t":"FAU-USP","a":"João Batista Vilanova Artigas y Carlos Cascaldi","y":1969,"yd":"1961–1969","c":"São Paulo","p":"Brasil","per":"s20","est":"Brutalismo paulista","esc":"edificio","tags":["latam"],"d":"La facultad de arquitectura de São Paulo: un solo gran espacio sin puertas de entrada. Artigas la pensó como un espacio democrático.","k":"Las rampas suaves que conectan todos los niveles alrededor de un salón central bajo una cubierta de luz cenital.","co":[-23.5601,-46.7298],"img":1,"cr":"Photograph by Mike Peel (www.mikepeel.net).","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Architecture_and_Urbanism_College_of_University_of_S%C3%A3o_Paulo_2016_03.jpg"},{"id":"torresparque","t":"Torres del Parque","a":"Rogelio Salmona","y":1970,"yd":"1964–1970","c":"Bogotá","p":"Colombia","per":"s20","est":"Modernismo de ladrillo","esc":"conjunto","tags":["latam"],"d":"Tres torres de vivienda de ladrillo que se escalonan junto a la plaza de toros y los cerros. Salmona trabajó en el estudio de Le Corbusier en París.","k":"El ladrillo como único material, en curvas y terrazas que suben hacia los cerros orientales.","img":1,"cr":"Felipe Restrepo Acosta","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:2017_Bogot%C3%A1_Torres_del_Parque_desde_el_Parque_de_la_Independencia.jpg"},{"id":"kimbell","t":"Museo de Arte Kimbell","a":"Louis Kahn","y":1972,"yd":"1966–1972","c":"Fort Worth, Texas","p":"Estados Unidos","per":"contemp","est":"Modernismo monumental","esc":"edificio","tags":[],"d":"Una serie de bóvedas de hormigón paralelas con una ranura de luz en lo más alto. La luz natural es el material principal del museo.","k":"Los reflectores de aluminio perforado bajo cada ranura reparten la luz plateada sobre las bóvedas.","co":[32.7486,-97.365],"img":1,"cr":"Carol M. Highsmith","lic":"Public domain","src":"https://commons.wikimedia.org/wiki/File:Kimbell_Art_Museum_Highsmith.jpg"},{"id":"munich","t":"Parque Olímpico de Múnich","a":"Behnisch & Partner con Frei Otto","y":1972,"yd":"1968–1972","c":"Múnich","p":"Alemania","per":"contemp","est":"Estructuras tensadas","esc":"conjunto","tags":["pritzker"],"d":"Una gran cubierta de red de cables y acrílico sobre los estadios de los Juegos de 1972. Frei Otto ganó el Pritzker en 2015, días después de morir.","k":"La cubierta liviana, como una tela de araña transparente, contrasta con las colinas artificiales del parque.","co":[48.1731,11.5467],"img":1,"cr":"Amrei-Marie","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Blick_vom_Olympiaberg_auf_das_Olympiastadion.jpg"},{"id":"sydney","t":"Ópera de Sídney","a":"Jørn Utzon","y":1973,"yd":"1959–1973","c":"Sídney","p":"Australia","per":"contemp","est":"Expresionismo moderno","esc":"edificio","tags":["pritzker"],"d":"Utzon ganó el concurso con unos croquis y renunció antes de que terminara la obra. Nunca volvió a verla terminada.","k":"Todas las 'velas' salen de una misma esfera: fue la solución geométrica para poder construirlas.","co":[-33.8571,151.2149],"img":1,"cr":"No machine-readable author provided. Roybb95~commonswiki assumed (based on copyr","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:Sydney_Opera_House_Sails.jpg"},{"id":"pacificdesign","t":"Pacific Design Center","a":"César Pelli y Norma Merrick Sklarek (Gruen Associates)","y":1975,"yd":"1975","c":"West Hollywood","p":"Estados Unidos","per":"contemp","est":"Modernismo tardío","esc":"edificio","tags":["mujer","latam"],"d":"Conocido como 'la ballena azul'. Norma Sklarek, codirectora del proyecto, fue la primera mujer afroamericana con licencia de arquitecta en Nueva York y California.","k":"Una piel de vidrio azul opaco que envuelve el volumen como una sola pieza de color.","co":[34.0828,-118.3823],"img":1,"cr":"Benoît Prieur","lic":"CC0","src":"https://commons.wikimedia.org/wiki/File:Pacific_Design_Center-(West_Hollywood)_July_2023.jpg"},{"id":"pompidou","t":"Centro Pompidou","a":"Renzo Piano, Richard Rogers y Gianfranco Franchini","y":1977,"yd":"1971–1977","c":"París","p":"Francia","per":"contemp","est":"High-tech","esc":"edificio","tags":["pritzker"],"d":"Un museo con las tripas afuera: estructura, cañerías y escaleras en la fachada, para dejar el interior libre. Piano y Rogers tenían menos de 40 años.","k":"El código de colores: azul para el aire, verde para el agua, amarillo para la electricidad y rojo para la circulación.","co":[48.8606,2.3522],"img":1,"cr":"Stefan Drößler","lic":"CC BY 4.0","src":"https://commons.wikimedia.org/wiki/File:L%C3%BCftungsrohre_Place_George_Pompidou_Paris.jpg"},{"id":"sancataldo","t":"Cementerio de San Cataldo","a":"Aldo Rossi con Gianni Braghieri","y":1978,"yd":"1971–(inconcluso)","c":"Módena","p":"Italia","per":"contemp","est":"Racionalismo / Tendenza","esc":"conjunto","tags":["pritzker"],"d":"Rossi lo pensó como una 'ciudad de los muertos' con formas arquetípicas. Ganó el Pritzker en 1990.","k":"El cubo rojo con ventanas cuadradas sin vidrios ni techo: una casa abandonada como símbolo.","img":1,"cr":"Massimocosti","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Cubo_di_Aldo_Rossi_del_cimitero_di_San_Cataldo.jpg"},{"id":"iimb","t":"IIM Bangalore","a":"Balkrishna Doshi (Stein, Doshi & Bhalla)","y":1983,"yd":"décadas de 1970–80","c":"Bangalore","p":"India","per":"contemp","est":"Modernismo indio","esc":"conjunto","tags":["pritzker"],"d":"Campus universitario inspirado en la ciudad de Fatehpur Sikri y en el templo de Madurai, entre jardines. Doshi trabajó con Le Corbusier y con Louis Kahn, y ganó el Pritzker en 2018.","k":"Los corredores de piedra cubiertos por pérgolas: calles en sombra donde se cruzan estudiantes y profesores.","img":1,"cr":"Magentic Manifestations","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:IIMB_Campus1.jpg"},{"id":"abteiberg","t":"Museo Abteiberg","a":"Hans Hollein","y":1982,"yd":"1972–1982","c":"Mönchengladbach","p":"Alemania","per":"contemp","est":"Posmodernismo","esc":"edificio","tags":["pritzker"],"d":"Museo en una ladera que se recorre como un paisaje de salas. Hollein ganó el Pritzker en 1985.","k":"Los techos en diente de sierra, como una fábrica, que llevan luz del norte a las salas.","img":1,"cr":"Gunnar Klack","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:2016-01-15-Museum-Abteiberg-Moenchengladbach-A.jpg"},{"id":"vietnam","t":"Monumento a los Veteranos de Vietnam","a":"Maya Lin","y":1982,"yd":"1982","c":"Washington D. C.","p":"Estados Unidos","per":"contemp","est":"Minimalismo / land art","esc":"ciudad","tags":["mujer"],"d":"Maya Lin ganó el concurso con 21 años, siendo estudiante. Un muro de granito negro con más de 58.000 nombres, hundido en el terreno como una herida.","k":"El granito pulido refleja a quien lee los nombres: el visitante se ve a sí mismo entre ellos.","co":[38.8911,-77.0478],"img":1,"cr":"David J. Jackson","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Vietnam_Memorial_Wall_with_Washington_Monument.jpg"},{"id":"stuttgart","t":"Neue Staatsgalerie Stuttgart","a":"James Stirling, Michael Wilford y Asociados","y":1984,"yd":"1977–1984","c":"Stuttgart","p":"Alemania","per":"contemp","est":"Posmodernismo","esc":"edificio","tags":["pritzker"],"d":"Ampliación del museo que mezcla citas clásicas con colores pop. Un camino público atraviesa el edificio.","k":"La rotonda abierta al cielo en el centro y las barandas tubulares rosa y azul.","co":[48.7802,9.1869],"img":1,"cr":"Immanuel Giel","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Neue_Staatsgalerie_Stuttgart_01.jpg"},{"id":"kakadu","t":"Centro de Visitantes Bowali, Kakadu","a":"Glenn Murcutt con Troppo Architects","y":1994,"yd":"1994","c":"Parque Nacional Kakadu","p":"Australia","per":"contemp","est":"Regionalismo australiano","esc":"edificio","tags":["pritzker"],"d":"Centro de visitantes en un parque nacional tropical, pensado para el calor y las lluvias del monzón. Murcutt trabaja solo y casi siempre en casas; ganó el Pritzker en 2002.","k":"Las celosías de listones y el gran techo de chapa que ventila y da sombra: 'tocar la tierra con suavidad'.","img":1,"cr":"Luke Durkin","lic":"CC BY 2.0","src":"https://commons.wikimedia.org/wiki/File:Facade_Slats_Kakadu_NP_Visitor_Centre_Glenn_Murcutt.jpg"},{"id":"hsbc","t":"Edificio HSBC de Hong Kong","a":"Norman Foster (Foster + Partners)","y":1985,"yd":"1979–1985","c":"Hong Kong","p":"China","per":"contemp","est":"High-tech","esc":"edificio","tags":["pritzker"],"d":"Un rascacielos sin núcleo central: la estructura cuelga de grandes mástiles. Al inaugurarse era el edificio más caro del mundo.","k":"El espejo solar en el atrio que refleja la luz del día hasta la plaza pública de planta baja.","co":[22.2803,114.1595],"img":1,"cr":"WiNG","lic":"CC BY 3.0","src":"https://commons.wikimedia.org/wiki/File:HK_HSBC_Main_Building_2008.jpg"},{"id":"merida","t":"Museo Nacional de Arte Romano","a":"Rafael Moneo","y":1986,"yd":"1980–1986","c":"Mérida","p":"España","per":"contemp","est":"Contemporáneo","esc":"edificio","tags":["pritzker"],"d":"Construido sobre ruinas romanas, con ladrillo de la misma proporción que el romano. Moneo fue el primer español en ganar el Pritzker.","k":"La nave de grandes arcos de ladrillo repetidos, que hace de la luz y la masa un ambiente romano sin copiar nada.","co":[38.9173,-6.3399],"img":1,"cr":"Anual","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Museo_Nacional_de_Arte_Romano_2019An002.jpg"},{"id":"lloyds","t":"Edificio Lloyd's","a":"Richard Rogers","y":1986,"yd":"1978–1986","c":"Londres","p":"Reino Unido","per":"contemp","est":"High-tech","esc":"edificio","tags":["pritzker"],"d":"Ascensores, escaleras y baños están afuera, en torres de acero inoxidable, para dejar las oficinas libres. Es el edificio más joven con protección patrimonial máxima en Inglaterra.","k":"Los ascensores de vidrio que suben por el exterior, y los baños prefabricados enchufados a la fachada.","co":[51.5131,-0.0824],"img":1,"cr":"Stephen Richards","lic":"CC BY-SA 2.0","src":"https://commons.wikimedia.org/wiki/File:Lloyds_building_taken_2011.jpg"},{"id":"orsay","t":"Museo de Orsay","a":"Gae Aulenti (interiores) con ACT Architecture","y":1986,"yd":"1980–1986","c":"París","p":"Francia","per":"contemp","est":"Reconversión","esc":"edificio","tags":["mujer"],"d":"Una antigua estación de tren de 1900 convertida en museo de arte del siglo XIX. Gae Aulenti diseñó las salas dentro de la gran nave.","k":"La nave de la estación conservada como calle central, con el gran reloj sobre la entrada.","co":[48.86,2.3265],"img":1,"cr":"zh:user:Munford","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:Paris_Mus%C3%A9e_d%27Orsay_Grande_nef_centrale_01b.jpg"},{"id":"ima","t":"Instituto del Mundo Árabe","a":"Jean Nouvel con Architecture-Studio","y":1987,"yd":"1981–1987","c":"París","p":"Francia","per":"contemp","est":"High-tech","esc":"edificio","tags":["pritzker"],"d":"La fachada sur tiene 240 paneles con diafragmas metálicos que se abren y cierran según la luz. Combina tecnología y patrones geométricos árabes.","k":"Cada panel funciona como el diafragma de una cámara de fotos, inspirado en las celosías mashrabiya.","img":1,"cr":"Serge Melki from Indianapolis, USA","lic":"CC BY 2.0","src":"https://commons.wikimedia.org/wiki/File:Institut_du_Monde_Arabe_-_Mousharabieh_Eiffel_(3388328705).jpg"},{"id":"iglesialuz","t":"Iglesia de la Luz","a":"Tadao Ando","y":1989,"yd":"1988–1989","c":"Ibaraki, Osaka","p":"Japón","per":"contemp","est":"Minimalismo","esc":"edificio","tags":["pritzker"],"d":"Una pequeña iglesia de hormigón con un presupuesto mínimo. Ando fue boxeador y aprendió arquitectura por su cuenta.","k":"La cruz no es un objeto: es una ranura en el muro por donde entra la luz.","co":[34.8186,135.5369],"img":1,"cr":"The original uploader was Bujatt at English Wikipedia.","lic":"CC BY-SA 2.5","src":"https://commons.wikimedia.org/wiki/File:Church_of_Light.JPG"},{"id":"louvre","t":"Pirámide del Louvre","a":"I. M. Pei","y":1989,"yd":"1984–1989","c":"París","p":"Francia","per":"contemp","est":"Modernismo tardío","esc":"pabellon","tags":["pritzker"],"d":"La nueva entrada del Louvre, muy criticada al principio. Lleva luz al gran vestíbulo subterráneo sin tapar las fachadas históricas.","k":"Usa vidrio extra transparente hecho especialmente para que no tenga el tono verde habitual.","co":[48.861,2.3359],"img":1,"cr":"Benh LIEU SONG (Flickr)","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:Louvre_Museum_Wikimedia_Commons.jpg"},{"id":"santjordi","t":"Palau Sant Jordi","a":"Arata Isozaki","y":1990,"yd":"1985–1990","c":"Barcelona","p":"España","per":"contemp","est":"High-tech","esc":"edificio","tags":["pritzker"],"d":"Pabellón para los Juegos Olímpicos de Barcelona 1992. La cubierta se armó en el suelo y se levantó con gatos hidráulicos.","k":"La cúpula se levantó como un paraguas que se abre de abajo hacia arriba: el sistema 'pantadome'.","co":[41.3634,2.1526],"img":1,"cr":"Hosiawak","lic":"CC BY 2.0","src":"https://commons.wikimedia.org/wiki/File:Palau_Sant_Jordi_Barcelona_Catalonia.jpg"},{"id":"sainsbury","t":"Ala Sainsbury, National Gallery","a":"Robert Venturi y Denise Scott Brown","y":1991,"yd":"1987–1991","c":"Londres","p":"Reino Unido","per":"contemp","est":"Posmodernismo","esc":"edificio","tags":["pritzker","mujer"],"d":"Ampliación de la National Gallery que dialoga con la fachada clásica vecina. El Pritzker 1991 premió solo a Venturi y dejó afuera a su socia Denise Scott Brown, una omisión muy discutida.","k":"Las pilastras clásicas que se van espaciando y desaparecen a lo largo de la fachada.","co":[51.5089,-0.1283],"img":1,"cr":"Richard George","lic":"CC BY 2.5","src":"https://commons.wikimedia.org/wiki/File:National_Gallery_London_Sainsbury_Wing_2006-04-17.jpg"},{"id":"hillside","t":"Hillside Terrace","a":"Fumihiko Maki","y":1992,"yd":"1969–1992","c":"Tokio","p":"Japón","per":"contemp","est":"Modernismo japonés","esc":"conjunto","tags":["pritzker"],"d":"Conjunto de viviendas, comercios y espacios culturales construido en siete etapas durante más de 20 años, en una misma calle. Maki ganó el Pritzker en 1993.","k":"Cada etapa responde a la anterior: la ciudad como algo que se completa con el tiempo.","img":1,"cr":"This Photo was taken by Supanut Arunoprayote. Feel free to use any of my images,","lic":"CC BY 4.0","src":"https://commons.wikimedia.org/wiki/File:Hillside_Terrace,_Building_C_20241020.jpg"},{"id":"bibnacional","t":"Biblioteca Nacional Mariano Moreno","a":"Clorindo Testa, Francisco Bullrich y Alicia Cazzaniga","y":1992,"yd":"1962–1992","c":"Buenos Aires","p":"Argentina","per":"contemp","est":"Brutalismo","esc":"edificio","tags":["latam","mujer"],"d":"Proyecto ganador de 1962, terminado treinta años después. La sala de lectura queda arriba, en un volumen suspendido sobre una plaza.","k":"El gran bloque sostenido por cuatro patas de hormigón, que deja libre el parque y lo mira desde lo alto.","img":1,"cr":"Gobierno de la Ciudad de Buenos Aires","lic":"CC BY 2.5 ar","src":"https://commons.wikimedia.org/wiki/File:Biblioteca_Nacional_BA.jpg"},{"id":"musica","t":"Ciudad de la Música","a":"Christian de Portzamparc","y":1995,"yd":"1990–1995","c":"París","p":"Francia","per":"contemp","est":"Contemporáneo","esc":"conjunto","tags":["pritzker"],"d":"Conservatorio, museo de la música y sala de conciertos en el parque de La Villette. Portzamparc fue el primer francés en ganar el Pritzker.","k":"Una calle interior en espiral que conecta las salas como notas en un recorrido.","co":[48.8897,2.3939],"img":1,"cr":"Olivier Bruchez","lic":"CC BY-SA 2.0","src":"https://commons.wikimedia.org/wiki/File:Cit%C3%A9_de_la_musique,_%22We_Want_Miles%22_exhibit_1.jpg"},{"id":"mube","t":"Museo Brasileño de la Escultura (MuBE)","a":"Paulo Mendes da Rocha","y":1995,"yd":"1986–1995","c":"São Paulo","p":"Brasil","per":"contemp","est":"Brutalismo paulista","esc":"edificio","tags":["latam","pritzker"],"d":"El museo está casi todo bajo tierra; lo que se ve es una gran viga de hormigón de 60 m que da sombra a una plaza. Mendes da Rocha ganó el Pritzker en 2006.","k":"Una sola viga gigante que funciona como techo, sombra y marco del cielo.","img":1,"cr":"Arte Fora do Museu","lic":"CC BY 2.0","src":"https://commons.wikimedia.org/wiki/File:Museu_Brasileiro_da_Escultura_(MuBE),_Paulo_Mendes_da_Rocha_(5878309120).jpg"},{"id":"vals","t":"Termas de Vals","a":"Peter Zumthor","y":1996,"yd":"1993–1996","c":"Vals","p":"Suiza","per":"contemp","est":"Minimalismo","esc":"edificio","tags":["pritzker"],"d":"Baños termales semienterrados en la montaña, hechos con 60.000 lajas de cuarcita local. Zumthor diseña pocas obras y muy lentamente.","k":"Las ranuras de luz entre los bloques del techo, que caen como hilos sobre el agua.","img":1,"cr":"Micha L. Rieser","lic":"Attribution","src":"https://commons.wikimedia.org/wiki/File:Therme_Vals_facade,_Vals,_Graub%C3%BCnden,_Switzerland_-_20090809.jpg"},{"id":"bilbao","t":"Museo Guggenheim Bilbao","a":"Frank Gehry","y":1997,"yd":"1993–1997","c":"Bilbao","p":"España","per":"contemp","est":"Deconstructivismo","esc":"edificio","tags":["pritzker"],"d":"Su éxito transformó una ciudad industrial en crisis y dio nombre al 'efecto Bilbao'. Fue diseñado con un software de la industria aeronáutica.","k":"El titanio ondulado, de apenas medio milímetro de espesor, que cambia de color con el clima.","co":[43.2688,-2.9341],"img":1,"cr":"Naotake Murayama","lic":"CC BY 2.0","src":"https://commons.wikimedia.org/wiki/File:Museo_Guggenheim,_Bilbao_(31273245344).jpg"},{"id":"getty","t":"Getty Center","a":"Richard Meier","y":1997,"yd":"1984–1997","c":"Los Ángeles","p":"Estados Unidos","per":"contemp","est":"Modernismo tardío","esc":"conjunto","tags":["pritzker"],"d":"Campus de museos e investigación sobre una colina de Los Ángeles. Usa travertino traído de Italia y paneles de metal blanco.","k":"La grilla de 76 cm que ordena todo el conjunto, del piso a las fachadas.","co":[34.0775,-118.475],"img":1,"cr":"Derbrauni","lic":"CC BY 4.0","src":"https://commons.wikimedia.org/wiki/File:2024_Getty_Center_07.jpg"},{"id":"tjibaou","t":"Centro Cultural Tjibaou","a":"Renzo Piano","y":1998,"yd":"1993–1998","c":"Numea","p":"Nueva Caledonia (Francia)","per":"contemp","est":"Contemporáneo","esc":"conjunto","tags":["pritzker"],"d":"Centro dedicado a la cultura canaca, inspirado en sus cabañas tradicionales. Piano ganó el Pritzker en 1998.","k":"Las 'cabañas' de listones de iroko curvados y abiertos que ventilan con el viento del Pacífico.","co":[-22.2564,166.4817],"img":1,"cr":"Fanny Schertzer","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:Kanak_house.jpg"},{"id":"palaistokyo","t":"Palais de Tokyo","a":"Anne Lacaton y Jean-Philippe Vassal","y":2001,"yd":"2001 / 2012","c":"París","p":"Francia","per":"contemp","est":"Reconversión","esc":"edificio","tags":["pritzker","mujer"],"d":"Centro de arte contemporáneo en un palacio de 1937. Lacaton y Vassal casi no demolieron nada: limpiaron y dejaron la estructura en bruto.","k":"Su lema: 'nunca demoler'. Las paredes peladas y las instalaciones a la vista son la decisión del proyecto.","co":[48.8641,2.2971],"img":1,"cr":"Strobilomyces","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:Palais_de_Tokyo_20030101w.JPG"},{"id":"gando","t":"Escuela Primaria de Gando","a":"Diébédo Francis Kéré","y":2001,"yd":"2001","c":"Gando","p":"Burkina Faso","per":"contemp","est":"Contemporáneo vernáculo","esc":"edificio","tags":["pritzker"],"d":"La escuela que Kéré construyó en su pueblo natal con la comunidad, ladrillos de tierra y un techo ventilado. Fue el primer africano en ganar el Pritzker, en 2022.","k":"Un techo de chapa separado del cielorraso: el aire caliente sale por el medio y las aulas quedan frescas.","img":1,"cr":"Schulbausteine","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:Primary_School_Gando.jpg"},{"id":"sendai","t":"Mediateca de Sendai","a":"Toyo Ito","y":2001,"yd":"1995–2001","c":"Sendai","p":"Japón","per":"contemp","est":"Contemporáneo","esc":"edificio","tags":["pritzker"],"d":"Biblioteca y centro de medios con losas finas sostenidas por 13 'tubos' de acero que parecen algas. Resistió el terremoto de 2011.","k":"Los tubos huecos y retorcidos llevan luz, cables y escaleras: estructura e instalaciones en uno.","co":[38.2656,140.8656],"img":1,"cr":"scarletgreen from Japan","lic":"CC BY 2.0","src":"https://commons.wikimedia.org/wiki/File:Sendai_Mediatheque_2009.jpg"},{"id":"judio","t":"Museo Judío de Berlín","a":"Daniel Libeskind","y":2001,"yd":"1992–2001","c":"Berlín","p":"Alemania","per":"contemp","est":"Deconstructivismo","esc":"edificio","tags":[],"d":"Un edificio en zigzag con vacíos que no se pueden recorrer, que representan la ausencia. Se entra por el edificio antiguo, bajo tierra.","k":"La Torre del Holocausto: un espacio de hormigón oscuro, frío y vacío, con una sola rendija de luz arriba.","co":[52.5023,13.3954],"img":1,"cr":"Marek Śliwecki","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Berlin_J%C3%BCdisches_Museum_und_der_Libeskind-Bau_(cropped).jpg"},{"id":"braga","t":"Estadio Municipal de Braga","a":"Eduardo Souto de Moura","y":2003,"yd":"2000–2003","c":"Braga","p":"Portugal","per":"contemp","est":"Contemporáneo","esc":"conjunto","tags":["pritzker"],"d":"Estadio construido en una cantera, con tribunas solo a los lados. Uno de los fondos es la propia montaña de roca.","k":"Los cables que cruzan de tribuna a tribuna, inspirados en los puentes de cuerda de los incas.","co":[41.5624,-8.4308],"img":1,"cr":"Manuel Anastácio uploaded 2004-08-17","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:Estadio_Braga.JPG"},{"id":"quintamonroy","t":"Quinta Monroy","a":"Alejandro Aravena (Elemental)","y":2004,"yd":"2003–2004","c":"Iquique","p":"Chile","per":"contemp","est":"Vivienda incremental","esc":"conjunto","tags":["latam","pritzker"],"d":"Vivienda social donde se construyó 'la mitad de una buena casa' y las familias completaron la otra mitad. Aravena ganó el Pritzker en 2016.","k":"Los huecos entre las casas: espacio previsto para que cada familia crezca a su ritmo.","co":[-20.2268,-70.1362],"img":1,"cr":"HogRider00","lic":"CC0","src":"https://commons.wikimedia.org/wiki/File:Quinta_Monroy_Infill_Diagram.jpg"},{"id":"musica_porto","t":"Casa da Música","a":"Rem Koolhaas (OMA)","y":2005,"yd":"1999–2005","c":"Oporto","p":"Portugal","per":"contemp","est":"Contemporáneo","esc":"edificio","tags":["pritzker"],"d":"Sala de conciertos con forma de piedra tallada, sobre una plaza ondulada. Koolhaas ganó el Pritzker en 2000.","k":"La sala principal tiene vidrios ondulados en los dos extremos: se ve la ciudad durante el concierto.","co":[41.1589,-8.6307],"img":1,"cr":"xiquinhosilva from Cacau","lic":"CC BY 2.0","src":"https://commons.wikimedia.org/wiki/File:86724-Porto_(49052540207).jpg"},{"id":"caterina","t":"Mercado de Santa Caterina","a":"Enric Miralles y Benedetta Tagliabue (EMBT)","y":2005,"yd":"1997–2005","c":"Barcelona","p":"España","per":"contemp","est":"Contemporáneo","esc":"edificio","tags":["mujer"],"d":"Renovación de un mercado del siglo XIX con un techo ondulado de colores. Tagliabue terminó la obra tras la muerte de Miralles en 2000.","k":"El techo de 325.000 piezas cerámicas en 67 colores, que reproduce frutas y verduras vistas desde arriba.","img":1,"cr":"Pere López Brosa","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Mercat_de_Santa_Caterina_-_20241105_171011.jpg"},{"id":"meti","t":"Escuela METI","a":"Anna Heringer y Eike Roswag","y":2006,"yd":"2005–2006","c":"Rudrapur","p":"Bangladés","per":"contemp","est":"Arquitectura de tierra","esc":"edificio","tags":["mujer"],"d":"Escuela construida con tierra y bambú junto a la comunidad local, con técnicas mejoradas. Ganó el Premio Aga Khan en 2007.","k":"Abajo, muros gruesos de tierra con cuevas para jugar; arriba, un piso liviano de bambú lleno de luz.","img":1,"cr":"Naquib Hossain from Montreal, Philadelphia, Dhaka","lic":"CC BY-SA 2.0","src":"https://commons.wikimedia.org/wiki/File:METI_Handmade_School_02_(3110828515).jpg"},{"id":"bibespana","t":"Parque Biblioteca España","a":"Giancarlo Mazzanti","y":2007,"yd":"2005–2007","c":"Medellín","p":"Colombia","per":"contemp","est":"Contemporáneo","esc":"conjunto","tags":["latam"],"d":"Tres volúmenes oscuros como rocas sobre la ladera de Santo Domingo Savio, parte de la transformación social de Medellín. Llegó en metrocable.","k":"Las 'rocas' se ven desde toda la ciudad y adentro tienen luz filtrada y silenciosa.","img":1,"cr":"SajoR","lic":"CC BY-SA 2.5","src":"https://commons.wikimedia.org/wiki/File:Biblioteca_Espa%C3%B1a-Medellin.JPG"},{"id":"yokosuka","t":"Museo de Arte de Yokosuka","a":"Riken Yamamoto","y":2007,"yd":"2007","c":"Yokosuka","p":"Japón","per":"contemp","est":"Contemporáneo","esc":"edificio","tags":["pritzker"],"d":"Museo frente a la bahía de Tokio con una doble piel de vidrio y acero. Yamamoto ganó el Pritzker 2024 por su arquitectura pensada para la comunidad.","k":"Las aberturas redondas en el acero blanco interior que enmarcan el mar y el cielo.","co":[35.2594,139.7379],"img":1,"cr":"Wiiii","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:Yokosuka_Museum_of_Art_2009.jpg"},{"id":"ningbo","t":"Museo de Historia de Ningbo","a":"Wang Shu (Amateur Architecture Studio)","y":2008,"yd":"2004–2008","c":"Ningbo","p":"China","per":"contemp","est":"Contemporáneo","esc":"edificio","tags":["pritzker"],"d":"Fachadas hechas con ladrillos y tejas recuperados de aldeas demolidas. Wang Shu fue el primer arquitecto chino en ganar el Pritzker.","k":"La técnica 'wapan': muros de materiales reciclados que guardan la memoria de lo demolido.","co":[29.8174,121.5412],"img":1,"cr":"Siyuwj","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:South_Gate_of_Ningbo_Museum.jpg"},{"id":"aqua","t":"Aqua Tower","a":"Jeanne Gang (Studio Gang)","y":2009,"yd":"2007–2009","c":"Chicago","p":"Estados Unidos","per":"contemp","est":"Contemporáneo","esc":"edificio","tags":["mujer"],"d":"Torre de 82 pisos con balcones de forma distinta en cada nivel. Al terminarse fue el edificio más alto del mundo diseñado por un estudio dirigido por una mujer.","k":"Las losas ondulantes crean una fachada que parece agua en movimiento, o curvas de nivel de un mapa.","img":1,"cr":"Juan Lanzagorta Vallín","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:Aqua_Tower,_Chicago.jpg"},{"id":"cooper","t":"41 Cooper Square","a":"Thom Mayne (Morphosis)","y":2009,"yd":"2006–2009","c":"Nueva York","p":"Estados Unidos","per":"contemp","est":"Deconstructivismo","esc":"edificio","tags":["pritzker"],"d":"Edificio académico de la Cooper Union con una piel de acero perforado que se abre en una gran grieta. Mayne ganó el Pritzker en 2005.","k":"La escalera central que asciende por un atrio torcido, pensada para que la gente se cruce.","co":[40.7285,-73.9903],"img":1,"cr":"Beyond My Ken","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Cooper_Union_New_Academic_Building_from_north.jpg"},{"id":"highline","t":"High Line","a":"James Corner Field Operations, Diller Scofidio + Renfro, Piet Oudolf","y":2009,"yd":"2009–2019","c":"Nueva York","p":"Estados Unidos","per":"contemp","est":"Paisajismo urbano","esc":"ciudad","tags":["mujer"],"d":"Un parque lineal sobre una vía elevada de tren abandonada. Elizabeth Diller es socia fundadora de Diller Scofidio + Renfro.","k":"Las tablas del piso se afinan entre las plantas, como si la vegetación se colara por las vías.","co":[40.7483,-74.005],"img":1,"cr":"Wil Fyfordy","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Highline_02.jpg"},{"id":"neuesmuseum","t":"Neues Museum","a":"David Chipperfield con Julian Harrap","y":2009,"yd":"1997–2009","c":"Berlín","p":"Alemania","per":"contemp","est":"Restauración contemporánea","esc":"edificio","tags":["pritzker"],"d":"Reconstrucción de un museo bombardeado en la Segunda Guerra, sin ocultar las heridas. Chipperfield ganó el Pritzker en 2023.","k":"Lo nuevo completa los huecos sin imitar lo viejo: las marcas de bala siguen en las paredes.","co":[52.5202,13.3976],"img":1,"cr":"Joyofmuseums","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Neues_Museum_-_Joy_of_Museums.jpg"},{"id":"maxxi","t":"MAXXI","a":"Zaha Hadid","y":2010,"yd":"1998–2010","c":"Roma","p":"Italia","per":"contemp","est":"Deconstructivismo / paramétrico","esc":"edificio","tags":["pritzker","mujer"],"d":"Museo del arte del siglo XXI formado por cintas de hormigón que se cruzan. Zaha Hadid fue la primera mujer en ganar el Pritzker, en 2004.","k":"Las escaleras negras suspendidas en el gran vestíbulo, que se entrelazan como cintas.","img":1,"cr":"Commonurbock23","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:MAXXI_Museum_interior_04.JPG"},{"id":"rolex","t":"Rolex Learning Center","a":"Kazuyo Sejima y Ryue Nishizawa (SANAA)","y":2010,"yd":"2007–2010","c":"Lausana","p":"Suiza","per":"contemp","est":"Minimalismo","esc":"edificio","tags":["pritzker","mujer"],"d":"Biblioteca universitaria de un solo piso que se ondula como un paisaje, con colinas y patios. Sejima fue la segunda mujer en ganar el Pritzker.","k":"El piso sube y baja: se forman lugares para sentarse y se ve por debajo del edificio.","co":[46.5183,6.5683],"img":1,"cr":"Mikado1201","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:Rolex_Learning_center.jpg"},{"id":"burj","t":"Burj Khalifa","a":"Adrian Smith (SOM); ingeniería de Bill Baker","y":2010,"yd":"2004–2010","c":"Dubái","p":"Emiratos Árabes Unidos","per":"contemp","est":"Rascacielos contemporáneo","esc":"edificio","tags":[],"d":"Con 828 m, el edificio más alto del mundo. Su planta en Y se inspira en una flor del desierto.","k":"El 'núcleo con contrafuertes': tres alas que se apoyan entre sí y se retiran en espiral hacia arriba.","co":[25.1972,55.2742],"img":1,"cr":"Tim.Reckmann","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:Dubai_skyline_2015_(crop).jpg"},{"id":"baiturrouf","t":"Mezquita Bait Ur Rouf","a":"Marina Tabassum","y":2012,"yd":"2005–2012","c":"Daca","p":"Bangladés","per":"contemp","est":"Contemporáneo","esc":"edificio","tags":["mujer"],"d":"Mezquita de barrio de ladrillo, sin cúpula ni minarete, financiada por la abuela de la arquitecta. Ganó el Premio Aga Khan en 2016.","k":"La luz que entra por los muros perforados de ladrillo y por claraboyas, dibujando el espacio de oración.","img":1,"cr":"Aashaa","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Bait_Ur_Rouf_mosque_at_afternoon.jpg"},{"id":"cardboard","t":"Catedral de Cartón","a":"Shigeru Ban","y":2013,"yd":"2013","c":"Christchurch","p":"Nueva Zelanda","per":"contemp","est":"Arquitectura de emergencia","esc":"edificio","tags":["pritzker"],"d":"Catedral temporal después del terremoto de 2011, hecha con tubos de cartón. Ban es conocido por sus refugios para desastres.","k":"Los 98 tubos de cartón del mismo diámetro forman un triángulo que va bajando de altura.","co":[-43.5324,172.643],"img":1,"cr":"Schwede66","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:Cardboard_Cathedral_03.JPG"},{"id":"bosco","t":"Bosco Verticale","a":"Stefano Boeri","y":2014,"yd":"2009–2014","c":"Milán","p":"Italia","per":"contemp","est":"Arquitectura verde","esc":"edificio","tags":[],"d":"Dos torres de vivienda con unos 800 árboles y miles de plantas en sus balcones. Equivalen a una hectárea de bosque en vertical.","k":"Los balcones escalonados con macetas gigantes de hormigón; los árboles se revisan con arneses desde arriba.","co":[45.4858,9.1903],"img":1,"cr":"Jeronimo Alcala","lic":"CC BY 3.0","src":"https://commons.wikimedia.org/wiki/File:Il_Bosco_Verticale_Milano_Px_(137734459).jpeg"},{"id":"soulages","t":"Museo Soulages","a":"RCR Arquitectes (Rafael Aranda, Carme Pigem, Ramon Vilalta)","y":2014,"yd":"2014","c":"Rodez","p":"Francia","per":"contemp","est":"Contemporáneo","esc":"edificio","tags":["pritzker","mujer"],"d":"Museo del pintor del negro, Pierre Soulages, hecho con cajas de acero corten. RCR es un estudio de tres socios de Olot, premiado en 2017.","k":"El acero oxidado cambia de color con la lluvia y el sol, en sintonía con la obra oscura de Soulages.","img":1,"cr":"Calips","lic":"CC BY-SA 3.0","src":"https://commons.wikimedia.org/wiki/File:France_Occitanie_12_Rodez_Soulages_01.jpg"},{"id":"utec","t":"UTEC, Universidad de Ingeniería y Tecnología","a":"Yvonne Farrell y Shelley McNamara (Grafton Architects)","y":2015,"yd":"2015","c":"Lima","p":"Perú","per":"contemp","est":"Contemporáneo","esc":"edificio","tags":["pritzker","mujer","latam"],"d":"Un 'acantilado' de hormigón que da a una vía rápida y se escalona hacia el barrio. Grafton ganó el Pritzker 2020 y el RIBA les dio el premio al mejor edificio nuevo del mundo en 2016.","k":"Las terrazas y huecos abiertos que ventilan sin aire acondicionado, gracias al clima de Lima.","co":[-12.1349,-77.0217],"img":1,"cr":"Utec2016","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Campus_UTEC_Lima.png"},{"id":"xicun","t":"West Village (Xicun Dayuan)","a":"Liu Jiakun","y":2015,"yd":"2015","c":"Chengdu","p":"China","per":"contemp","est":"Contemporáneo","esc":"conjunto","tags":["pritzker"],"d":"Un enorme bloque de cinco pisos alrededor de un patio con canchas, que funciona como un barrio. Liu Jiakun ganó el Pritzker en 2025.","k":"Las rampas para bicicletas que recorren todo el perímetro del edificio, hasta la terraza.","img":1,"cr":"来斤小仓鼠吧","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:%E6%88%90%E9%83%BD%E8%A5%BF%E6%9D%91%C2%B7%E8%B4%9D%E6%A3%AE%E5%A4%A7%E9%99%A2%E7%AB%8B%E4%BD%93%E8%B7%91%E9%81%93.jpg"},{"id":"estonia","t":"Museo Nacional de Estonia","a":"Dan Dorell, Lina Ghotmeh y Tsuyoshi Tane (DGT)","y":2016,"yd":"2006–2016","c":"Tartu","p":"Estonia","per":"contemp","est":"Contemporáneo","esc":"edificio","tags":["mujer"],"d":"El museo continúa la pista de una antigua base aérea soviética: un techo que se eleva desde el suelo. Lina Ghotmeh es arquitecta libanesa con sede en París.","k":"La pista se convierte en edificio: una rampa que asciende hacia el horizonte.","co":[58.3956,26.7456],"img":1,"cr":"Arp Karm","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Eesti_Rahva_Muuseumi_peahoone_13.jpg"},{"id":"elbphil","t":"Elbphilharmonie","a":"Herzog & de Meuron","y":2017,"yd":"2007–2017","c":"Hamburgo","p":"Alemania","per":"contemp","est":"Contemporáneo","esc":"edificio","tags":["pritzker"],"d":"Sala de conciertos de vidrio construida sobre un depósito portuario de ladrillo. Costó diez veces lo previsto y hoy es el símbolo de Hamburgo.","k":"Los vidrios curvos de la fachada, como olas o como velas, sobre el bloque de ladrillo del puerto.","co":[53.5414,9.9842],"img":1,"cr":"Burkhard Mücke","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:2019-05-10_Elbphilharmonie_Hamburg.jpg"},{"id":"biobio","t":"Teatro Regional del Biobío","a":"Smiljan Radić con Eduardo Castillo y Gabriela Medrano","y":2018,"yd":"2012–2018","c":"Concepción","p":"Chile","per":"contemp","est":"Contemporáneo","esc":"edificio","tags":["latam","pritzker"],"d":"Un volumen envuelto en una membrana translúcida que de noche brilla como una lámpara. Smiljan Radić ganó el Pritzker en 2026.","k":"La piel de tela de PTFE que deja ver la estructura de acero detrás, como una sombra.","img":1,"cr":"Warko","lic":"CC BY-SA 4.0","src":"https://commons.wikimedia.org/wiki/File:Teatro_Regional_del_Biob%C3%ADo_01.jpg"}],"pritzker":[[1979,"Philip Johnson","Estados Unidos","glasshouse","Llevó el Estilo Internacional a Estados Unidos y después lo abandonó por el posmodernismo."],[1980,"Luis Barragán","México","casabarragan","Muros de color, agua y silencio: una arquitectura emocional hecha con pocos elementos."],[1981,"James Stirling","Reino Unido","stuttgart","Del brutalismo a un posmodernismo irónico, con citas clásicas y colores fuertes."],[1982,"Kevin Roche","Irlanda / Estados Unidos","ford","Sucesor de Eero Saarinen, diseñó grandes sedes corporativas y museos."],[1983,"I. M. Pei","China / Estados Unidos","louvre","Geometría precisa y museos que conviven con edificios históricos."],[1984,"Richard Meier","Estados Unidos","getty","Arquitectura blanca y luminosa, heredera de Le Corbusier."],[1985,"Hans Hollein","Austria","abteiberg","Arquitecto, artista y diseñador; figura clave del posmodernismo europeo."],[1986,"Gottfried Böhm","Alemania","neviges","Iglesias de hormigón esculpidas como montañas cristalinas."],[1987,"Kenzō Tange","Japón","yoyogi","Unió la tradición japonesa con el modernismo y formó a la generación metabolista."],[1988,"Oscar Niemeyer","Brasil","congreso","Curvas libres de hormigón: 'la curva que encuentro en las montañas y en el cuerpo de la mujer'."],[1988,"Gordon Bunshaft","Estados Unidos","lever","Diseñador de SOM, definió el rascacielos corporativo de vidrio."],[1989,"Frank Gehry","Canadá / Estados Unidos","bilbao","Formas libres de metal posibles gracias al diseño por computadora."],[1990,"Aldo Rossi","Italia","sancataldo","Teórico de 'La arquitectura de la ciudad': formas arquetípicas y memoria."],[1991,"Robert Venturi","Estados Unidos","venturi","Defendió la complejidad y la contradicción contra el purismo moderno."],[1992,"Álvaro Siza","Portugal","leca","Arquitectura blanca y sensible al lugar, desde Oporto al mundo."],[1993,"Fumihiko Maki","Japón","hillside","Pensó la ciudad como un conjunto de partes que crecen con el tiempo."],[1994,"Christian de Portzamparc","Francia","musica","Edificios como pequeñas ciudades, con calles y recorridos interiores."],[1995,"Tadao Ando","Japón","iglesialuz","Hormigón liso, luz y naturaleza; aprendió arquitectura por su cuenta."],[1996,"Rafael Moneo","España","merida","Cada proyecto responde a su lugar y a su historia, sin un estilo fijo."],[1997,"Sverre Fehn","Noruega","nordic","Poeta de la luz nórdica, la madera y el hormigón."],[1998,"Renzo Piano","Italia","tjibaou","De la tecnología del Pompidou a la artesanía de cada material."],[1999,"Norman Foster","Reino Unido","hsbc","Pionero del high-tech y de la eficiencia energética en grandes obras."],[2000,"Rem Koolhaas","Países Bajos","musica_porto","Pensador de la metrópolis contemporánea y fundador de OMA."],[2001,"Herzog & de Meuron","Suiza","elbphil","Investigan materiales y fachadas como si fueran una piel."],[2002,"Glenn Murcutt","Australia","kakadu","Trabaja solo, en casas que responden al clima y al paisaje."],[2003,"Jørn Utzon","Dinamarca","sydney","Autor de la Ópera de Sídney, obra cumbre del siglo XX."],[2004,"Zaha Hadid","Irak / Reino Unido","maxxi","Primera mujer en ganar el Pritzker; formas fluidas y dinámicas."],[2005,"Thom Mayne","Estados Unidos","cooper","Edificios fragmentados y en tensión, desde Morphosis."],[2006,"Paulo Mendes da Rocha","Brasil","mube","Brutalismo paulista: grandes luces de hormigón y espacio público."],[2007,"Richard Rogers","Reino Unido","lloyds","High-tech: estructura e instalaciones a la vista."],[2008,"Jean Nouvel","Francia","ima","Cada obra con una atmósfera propia, entre la luz y la tecnología."],[2009,"Peter Zumthor","Suiza","vals","Pocas obras, muy lentas, centradas en los materiales y los sentidos."],[2010,"Kazuyo Sejima y Ryue Nishizawa (SANAA)","Japón","rolex","Ligereza, transparencia y plantas que difuminan los límites."],[2011,"Eduardo Souto de Moura","Portugal","braga","Precisión y materiales del lugar, en diálogo con el paisaje."],[2012,"Wang Shu","China","ningbo","Construye con materiales recuperados y técnicas tradicionales chinas."],[2013,"Toyo Ito","Japón","sendai","Arquitectura ligera y fluida, inspirada en la naturaleza."],[2014,"Shigeru Ban","Japón","cardboard","Estructuras de cartón y refugios para víctimas de desastres."],[2015,"Frei Otto","Alemania","munich","Pionero de las estructuras livianas, tensadas y de membranas."],[2016,"Alejandro Aravena","Chile","quintamonroy","Vivienda social incremental y diseño participativo."],[2017,"RCR Arquitectes","España","soulages","Tres socios de Olot que unen paisaje, materia y lugar."],[2018,"Balkrishna Doshi","India","iimb","Modernismo adaptado a la India, con vivienda accesible."],[2019,"Arata Isozaki","Japón","santjordi","Puente entre Oriente y Occidente, con estilos siempre cambiantes."],[2020,"Yvonne Farrell y Shelley McNamara","Irlanda","utec","Grafton Architects: edificios generosos que hacen ciudad."],[2021,"Anne Lacaton y Jean-Philippe Vassal","Francia","palaistokyo","'Nunca demoler': transformar lo existente y ampliar el espacio de vida."],[2022,"Diébédo Francis Kéré","Burkina Faso","gando","Primer africano premiado; construye con su comunidad y con tierra."],[2023,"David Chipperfield","Reino Unido","neuesmuseum","Arquitectura sobria que restaura y continúa lo existente."],[2024,"Riken Yamamoto","Japón","yokosuka","Diseña para que la vivienda se abra a la comunidad."],[2025,"Liu Jiakun","China","xicun","Arquitectura de la vida cotidiana en la China contemporánea."],[2026,"Smiljan Radić","Chile","biobio","Obras frágiles y experimentales, entre la piedra, la membrana y el paisaje."]]}</script>
+<script>
+(function(){
+"use strict";
+const PWA = true;
+const STANDALONE = (window.matchMedia && matchMedia("(display-mode: standalone)").matches) || navigator.standalone === true;
+const DATA = JSON.parse(document.getElementById("data").textContent);
+const W = DATA.works, BY = Object.fromEntries(W.map(w => [w.id, w]));
+const PRZ = DATA.pritzker.map(([year, name, country, work, idea]) => ({year, name, country, work, idea}));
+const PRZ_BY_WORK = {}; PRZ.forEach(p => (PRZ_BY_WORK[p.work] = PRZ_BY_WORK[p.work] || []).push(p));
+const PER = {antigua:"Antigüedad", media:"Edad Media", moderna:"Edad Moderna", industrial:"Era industrial", s20:"Siglo XX", contemp:"Contemporánea"};
+const PER_RANGE = {antigua:"hasta 500", media:"500–1400", moderna:"1400–1750", industrial:"1750–1914", s20:"1914–1970", contemp:"1970–hoy"};
+const ESC = {objeto:"Objeto e interior", pabellon:"Casa o pabellón", edificio:"Edificio", conjunto:"Conjunto o infraestructura", ciudad:"Ciudad y paisaje"};
+const TAG = {pritzker:"Pritzker", latam:"Latinoamérica", mujer:"Arquitectas"};
+const COLS = [
+  {key:"pritzker", name:"Premio Pritzker", sub:"Todos los laureados, de 1979 a 2026", f: w => w.tags.includes("pritzker"), cover:"bilbao", wide:true},
+  {key:"latam", name:"Latinoamérica", sub:"Obras y arquitectxs de la región", f: w => w.tags.includes("latam"), cover:"masp"},
+  {key:"mujer", name:"Arquitectas y diseñadoras", sub:"Obras con mujeres en la autoría", f: w => w.tags.includes("mujer"), cover:"rolex"},
+  ...Object.keys(PER).map((k, i) => ({key:k, name:PER[k], sub:PER_RANGE[k], f: w => w.per === k, cover:["partenon","santasofia","rotonda","eiffel","savoye","vals"][i], group:"per"})),
+  ...Object.keys(ESC).map((k, i) => ({key:"esc-"+k, name:ESC[k], sub:"Escala", f: w => w.esc === k, cover:["frankfurt","glasshouse","seagram","pontdugard","brasilia"][i], group:"esc"})),
+];
+const COL_BY = Object.fromEntries(COLS.map(c => [c.key, c]));
+
+/* ---------- utilidades ---------- */
+const $ = (s, el = document) => el.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const dayNum = (d = new Date()) => Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 864e5);
+const TODAY = dayNum();
+function rng(seed){ let s = seed >>> 0 || 1; return () => { s ^= s << 13; s >>>= 0; s ^= s >> 17; s ^= s << 5; s >>>= 0; return s / 4294967296; }; }
+const shuffle = (a, r = Math.random) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const pick = (a, r = Math.random) => a[Math.floor(r() * a.length)];
+const img = (w, cls = "", alt = true) => w && w.img ? `<img src="img/${w.id}.jpg" loading="lazy" decoding="async" class="${cls}" alt="${alt ? esc(w.t) : ""}">` : `<div class="ph ${cls}">sin foto libre</div>`;
+const place = w => `${w.c}, ${w.p}`;
+const credit = w => w.img ? `<a class="credit" href="${esc(w.src)}" target="_blank" rel="noopener">Foto: ${esc(w.cr || "Wikimedia Commons")}${w.lic ? " · " + esc(w.lic) : ""}</a>` : "";
+const ICON = {
+  heart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>',
+  info:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg>',
+  x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  back:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg>',
+  quiz:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.7M12 17v.3"/></svg>',
+};
+
+/* ---------- estado y guardado ---------- */
+const LS_KEY = "anden.v1";
+const blank = () => ({v:1, upd:0, seen:{}, box:{}, favs:[], days:[], qa:{n:0, ok:0}, trip:null});
+let S = blank();
+try { const raw = localStorage.getItem(LS_KEY); if (raw) S = Object.assign(blank(), JSON.parse(raw)); } catch (e) {}
+let remote = null, saveTimer = null, saving = false, dirty = false;
+function save(){
+  S.upd = Date.now();
+  try { localStorage.setItem(LS_KEY, JSON.stringify(S)); } catch (e) {}
+  dirty = true; clearTimeout(saveTimer); saveTimer = setTimeout(flush, 1200);
+}
+async function flush(){
+  if (!remote || saving || !dirty) return;
+  saving = true; dirty = false;
+  try { await remote.set(JSON.parse(JSON.stringify(S))); } catch (e) { if (e && e.code === "invalid_argument") remote = null; }
+  saving = false; if (dirty) flush();
+}
+(async function connect(){
+  try {
+    if (!window.claude || !window.claude.use) return;
+    const [user, db] = await Promise.all([window.claude.use("user"), window.claude.use("db")]);
+    if (!user || !db) return;
+    const id = await user.id(); if (!id) return;
+    const ref = db.doc("data/users/" + id + "/progress");
+    const snap = await ref.get();
+    remote = ref;
+    if (snap.exists) {
+      const d = snap.data();
+      if ((d.upd || 0) > (S.upd || 0)) { S = Object.assign(blank(), JSON.parse(JSON.stringify(d))); try { localStorage.setItem(LS_KEY, JSON.stringify(S)); } catch (e) {} renderAll(); }
+      else if ((S.upd || 0) > (d.upd || 0)) { dirty = true; flush(); }
+    } else if (S.upd) { dirty = true; flush(); }
+    syncNote = "Tu progreso se guarda en tu cuenta y se sincroniza entre el celular y la compu.";
+    if (current === "progreso") renderProgreso();
+  } catch (e) {}
+})();
+let syncNote = "Tu progreso se guarda en este navegador.";
+
+const isSeen = id => S.seen[id] != null;
+function markSeen(id){ if (!isSeen(id)) { S.seen[id] = TODAY; save(); } }
+const isFav = id => S.favs.includes(id);
+function toggleFav(id){ S.favs = isFav(id) ? S.favs.filter(x => x !== id) : [id, ...S.favs]; save(); return isFav(id); }
+const GAP = [0, 1, 2, 4, 8, 16, 32];
+function review(id, ok){
+  const b = S.box[id] || [0, TODAY];
+  S.box[id] = [ok ? Math.min(b[0] + 1, 6) : 1, TODAY];
+  S.qa.n++; if (ok) S.qa.ok++;
+  save();
+}
+const due = id => { const b = S.box[id]; return !b || TODAY - b[1] >= GAP[b[0]]; };
+function streak(){
+  const set = new Set(S.days); let d = set.has(TODAY) ? TODAY : TODAY - 1, n = 0;
+  while (set.has(d)) { n++; d--; }
+  return n;
+}
+
+/* ---------- preguntas ---------- */
+function distinct(answerOf, correct, pool, n, r){
+  const seen = new Set([answerOf(correct)]), out = [];
+  for (const w of shuffle(pool, r)) { const a = answerOf(w); if (!a || seen.has(a)) continue; seen.add(a); out.push(a); if (out.length === n) break; }
+  return out;
+}
+function makeQ(id, r = Math.random, kind){
+  const w = BY[id];
+  const kinds = ["obra", "autor", "cuando", "donde"];
+  if (PRZ_BY_WORK[id]) kinds.push("pritzker", "pritzker");
+  if (w.img) kinds.push("obra");
+  kind = kind || pick(kinds, r);
+  if (!w.img && kind === "obra") kind = "autor";
+  const near = W.filter(x => x.id !== id && (x.per === w.per));
+  let q;
+  if (kind === "obra") {
+    const opts = [w.t, ...distinct(x => x.t, w, near.length >= 6 ? near : W.filter(x => x.id !== id), 3, r)];
+    q = {kind, id, ask:"¿Qué obra es?", img:true, opts, ans:w.t};
+  } else if (kind === "autor") {
+    const pool = W.filter(x => x.id !== id && !x.a.includes(w.a.split(" ")[0]));
+    const opts = [w.a, ...distinct(x => x.a, w, pool.filter(x => x.per === w.per).length >= 4 ? pool.filter(x => x.per === w.per) : pool, 3, r)];
+    q = {kind, id, ask:"¿Quién la diseñó?", sub:w.t, img:true, opts, ans:w.a};
+  } else if (kind === "cuando") {
+    const gap = Math.max(25, Math.abs(w.y) * 0.12);
+    const pool = W.filter(x => Math.abs(x.y - w.y) > gap);
+    const picks = []; for (const x of shuffle(pool, r)) { if (picks.every(p => Math.abs(p.y - x.y) > gap) && !picks.some(p => p.yd === x.yd)) picks.push(x); if (picks.length === 3) break; }
+    const opts = [w, ...picks].sort((a, b) => a.y - b.y).map(x => x.yd);
+    q = {kind, id, ask:"¿Cuándo se construyó?", sub:w.t, img:true, opts, ans:w.yd, keep:true};
+  } else if (kind === "donde") {
+    const pool = W.filter(x => x.p !== w.p);
+    q = {kind, id, ask:"¿Dónde está?", sub:w.t, img:true, opts:[place(w), ...distinct(place, w, pool, 3, r)], ans:place(w)};
+  } else {
+    const p = pick(PRZ_BY_WORK[id], r);
+    if (r() < .5) {
+      const yrs = new Set([p.year]); while (yrs.size < 4) { const y = 1979 + Math.floor(r() * 48); if ([...yrs].every(v => Math.abs(v - y) >= 3)) yrs.add(y); }
+      q = {kind, id, ask:`¿En qué año ${/ y |&|\(/.test(p.name) ? "ganaron" : "ganó"} ${p.name} el Premio Pritzker?`, img:true, opts:[...yrs].sort().map(String), ans:String(p.year), keep:true};
+    } else {
+      const others = shuffle(PRZ.filter(x => x.name !== p.name && Math.abs(x.year - p.year) <= 14), r).slice(0, 3).map(x => x.name);
+      q = {kind, id, ask:`¿Quién ganó el Premio Pritzker ${p.year}?`, img:false, opts:[p.name, ...others], ans:p.name};
+    }
+  }
+  if (!q.keep) q.opts = shuffle(q.opts, r);
+  return q;
+}
+function makeOrder(ids, r){
+  const pool = ids.map(i => BY[i]).filter(Boolean);
+  const chosen = []; for (const w of shuffle(pool, r)) { if (chosen.every(c => Math.abs(c.y - w.y) >= 5)) chosen.push(w); if (chosen.length === 3) break; }
+  while (chosen.length < 3) { const w = pick(W, r); if (chosen.every(c => Math.abs(c.y - w.y) >= 20)) chosen.push(w); }
+  return {kind:"orden", ids:shuffle(chosen.map(w => w.id), r), ans:chosen.slice().sort((a, b) => a.y - b.y).map(w => w.id), ask:"Ordená de la más antigua a la más nueva"};
+}
+function explain(w){ return `${w.t}: ${w.a}, ${w.yd}, ${place(w)}.`; }
+
+/* ---------- viaje del día ---------- */
+function buildTrip(){
+  const r = rng(TODAY * 2654435761);
+  const unseen = W.filter(w => !isSeen(w.id));
+  const pool = unseen.length >= 5 ? unseen : W.filter(w => due(w.id));
+  const pers = shuffle(Object.keys(PER), r), news = [];
+  // una obra por época, y al menos una de cada colección destacada si hay
+  for (const want of shuffle(["pritzker", "latam", "mujer"], r)) {
+    const c = shuffle(pool.filter(w => w.tags.includes(want) && !news.includes(w.id)), r)[0]; if (c && news.length < 2) news.push(c.id);
+  }
+  for (const p of pers) { if (news.length >= 5) break; const c = shuffle(pool.filter(w => w.per === p && !news.includes(w.id)), r)[0]; if (c) news.push(c.id); }
+  for (const w of shuffle(pool, r)) { if (news.length >= 5) break; if (!news.includes(w.id)) news.push(w.id); }
+  const rev = shuffle(W.filter(w => isSeen(w.id) && !news.includes(w.id) && due(w.id)), r).map(w => w.id);
+  const qa = i => makeQ(i, r);
+  const [a, b, c, d, e] = shuffle(news, r);
+  const steps = [
+    {t:"w", id:a}, {t:"w", id:b}, {t:"q", q:qa(rev[0] || a)},
+    {t:"w", id:c}, {t:"q", q:qa(b)}, {t:"w", id:d}, {t:"w", id:e},
+    {t:"q", q:makeOrder(news, r)}, {t:"q", q:qa(rev[1] || d)}, {t:"q", q:qa(e)},
+  ];
+  return {day:TODAY, steps, at:0, ok:0, nq:0, news, done:false};
+}
+function trip(){ if (!S.trip || S.trip.day !== TODAY) { S.trip = buildTrip(); save(); } return S.trip; }
+
+let quick = null; // repaso o quiz de colección, no se guarda
+function startQuick(ids, title){
+  const r = Math.random, chosen = shuffle(ids, r).slice(0, 6);
+  const steps = chosen.slice(0, 5).map(i => ({t:"q", q:makeQ(i, r)}));
+  if (chosen.length >= 3) steps.splice(2, 0, {t:"q", q:makeOrder(chosen, r)});
+  quick = {title, steps, at:0, ok:0, nq:0, done:false, quick:true};
+  openTrip();
+}
+function T(){ return quick || trip(); }
+
+const tripEl = $("#trip");
+let answered = null, orderSel = [];
+function openTrip(){ tripEl.hidden = false; answered = null; orderSel = []; renderTrip(); }
+function closeTrip(){ tripEl.hidden = true; quick = null; renderAll(); }
+function stopsBar(t){
+  return `<div class="stops" aria-hidden="true">${t.steps.map((s, i) => `${i ? `<i class="${i <= t.at ? "done" : ""}"></i>` : ""}<b class="${s.t === "q" ? "sq" : ""} ${i < t.at || t.done ? "done" : ""}"></b>`).join("")}</div>`;
+}
+function renderTrip(){
+  const t = T();
+  const head = `<div class="tbar"><div class="top"><button class="x" data-act="close" aria-label="Cerrar">${ICON.x}</button><span class="mono">${t.done ? "Destino" : `Parada ${t.at + 1} de ${t.steps.length}`}</span><span style="width:28px"></span></div>${stopsBar(t)}</div>`;
+  if (t.done) {
+    const s = streak();
+    tripEl.innerHTML = head + `<div class="tbody"><div class="arrive">
+      <span class="mono">${t.quick ? esc(t.title) : "Viaje de hoy"}</span>
+      <h2>Llegaste a destino.</h2>
+      <div class="stat3">
+        ${t.quick ? "" : `<div><b>${t.news.length}</b><span class="mono">obras nuevas</span></div>`}
+        <div><b>${t.ok}/${t.nq}</b><span class="mono">aciertos</span></div>
+        <div><b>${s}</b><span class="mono">${s === 1 ? "día seguido" : "días seguidos"}</span></div>
+      </div>
+      ${t.quick ? "" : `<p class="read">Mañana te espera otro viaje con cinco obras nuevas. Las de hoy vuelven en preguntas de repaso dentro de unos días.</p>
+      <div class="list">${t.news.map(i => rowHTML(BY[i])).join("")}</div>`}
+    </div></div><div class="tfoot"><button class="btn" data-act="close">Volver al andén</button></div>`;
+    return;
+  }
+  const st = t.steps[t.at];
+  if (st.t === "w") {
+    const w = BY[st.id]; markSeen(w.id);
+    tripEl.innerHTML = head + `<div class="tbody">${fichaHTML(w)}</div>
+      <div class="tfoot"><button class="favbtn ${isFav(w.id) ? "on" : ""}" data-act="fav" data-id="${w.id}" aria-label="Guardar en favoritas">${ICON.heart}</button><button class="btn" data-act="next">Siguiente parada</button></div>`;
+  } else {
+    tripEl.innerHTML = head + `<div class="tbody">${quizHTML(st.q)}</div>
+      <div class="tfoot">${st.q.kind === "orden" && !answered ? `<button class="btn" data-act="check" ${orderSel.length < 3 ? "disabled" : ""}>Comprobar</button>` : `<button class="btn" data-act="next" ${answered ? "" : "disabled"}>${t.at === t.steps.length - 1 ? "Llegar a destino" : "Siguiente parada"}</button>`}</div>`;
+  }
+  $(".tbody", tripEl).scrollTop = 0;
+}
+const KINDLABEL = {obra:"Reconocer", autor:"Autoría", cuando:"Época", donde:"Lugar", pritzker:"Premio Pritzker", orden:"Línea de tiempo"};
+function quizHTML(q){
+  if (q.kind === "orden") {
+    return `<div class="q"><span class="mono">Pregunta · ${KINDLABEL.orden}</span><h2>${q.ask}</h2>
+      <p class="note">Tocá las obras en orden. Tocá de nuevo para deshacer.</p>
+      <div class="order">${q.ids.map(i => { const w = BY[i], n = orderSel.indexOf(i);
+        const right = answered && q.ans.indexOf(i);
+        return `<button class="ord ${n >= 0 ? "sel" : ""}" data-act="ord" data-id="${i}" ${answered ? "disabled" : ""}>${img(w)}${n >= 0 ? `<span class="num">${n + 1}</span>` : ""}<span>${esc(w.t)}</span>${answered ? `<small>${esc(w.yd)} · ${right + 1}º</small>` : ""}</button>`; }).join("")}</div>
+      ${answered ? verdictHTML(answered.ok, q.ans.map(i => `${BY[i].t} (${BY[i].yd})`).join(" → ")) : ""}</div>`;
+  }
+  const w = BY[q.id];
+  return `<div class="q"><span class="mono">Pregunta · ${KINDLABEL[q.kind]}</span><h2>${esc(q.ask)}</h2>
+    ${q.sub ? `<p class="qsub">${esc(q.sub)}</p>` : ""}
+    ${q.img && w.img ? `<div class="qimg">${img(w, "", q.kind !== "obra")}</div>` : ""}
+    <div class="opts">${q.opts.map((o, i) => {
+      let cls = ""; if (answered) { if (o === q.ans) cls = "ok"; else if (o === answered.pick) cls = "bad"; }
+      return `<button class="opt ${cls}" data-act="ans" data-i="${i}" ${answered ? "disabled" : ""}><span class="k">${"ABCD"[i]}</span><span>${esc(o)}</span></button>`; }).join("")}</div>
+    ${answered ? verdictHTML(answered.ok, explain(w)) : ""}</div>`;
+}
+function verdictHTML(ok, text){
+  return `<div class="verdict ${ok ? "ok" : "bad"}" role="status"><b>${ok ? "¡Correcto!" : "No era esa."}</b><p>${esc(text)}</p></div>`;
+}
+function buzz(ms){ try { navigator.vibrate && navigator.vibrate(ms); } catch (e) {} }
+tripEl.addEventListener("click", e => {
+  const b = e.target.closest("[data-act]"); if (!b) return;
+  const t = T(), st = t.steps[t.at], act = b.dataset.act;
+  if (act === "close") return closeTrip();
+  if (act === "open") return openSheet(b.dataset.id);
+  if (act === "fav") { const on = toggleFav(b.dataset.id); b.classList.toggle("on", on); return; }
+  if (act === "ans" && !answered) {
+    const q = st.q, o = q.opts[+b.dataset.i], ok = o === q.ans;
+    answered = {ok, pick:o}; t.nq++; if (ok) t.ok++; review(q.id, ok); buzz(ok ? 15 : [30, 40, 30]);
+    if (!t.quick) save();
+    return renderTrip();
+  }
+  if (act === "ord" && !answered) {
+    const id = b.dataset.id; orderSel = orderSel.includes(id) ? orderSel.filter(x => x !== id) : [...orderSel, id];
+    return renderTrip();
+  }
+  if (act === "check" && orderSel.length === 3) {
+    const ok = orderSel.join() === st.q.ans.join(); answered = {ok}; t.nq++; if (ok) t.ok++;
+    S.qa.n++; if (ok) S.qa.ok++; buzz(ok ? 15 : [30, 40, 30]); save();
+    return renderTrip();
+  }
+  if (act === "next") {
+    answered = null; orderSel = [];
+    if (t.at >= t.steps.length - 1) {
+      t.done = true;
+      if (!t.quick && !S.days.includes(TODAY)) S.days.push(TODAY);
+      if (quick && !S.days.includes(TODAY) && t.nq >= 5) S.days.push(TODAY);
+    } else t.at++;
+    save(); renderTrip();
+  }
+});
+
+/* ---------- ficha ---------- */
+function fichaHTML(w){
+  const prz = PRZ_BY_WORK[w.id];
+  return `<article class="ficha">
+    <div class="photo">${img(w)}${credit(w)}</div>
+    ${w.nf ? `<p class="note">${esc(w.nf)}</p>` : ""}
+    <div style="display:flex;gap:6px;flex-wrap:wrap">${w.tags.map(t => `<span class="tag y">${TAG[t]}</span>`).join("")}<span class="tag">${PER[w.per]}</span></div>
+    <h2>${esc(w.t)}</h2>
+    <div class="who">${esc(w.a)}</div>
+    <dl class="facts">
+      <div><dt>Año</dt><dd>${esc(w.yd)}</dd></div>
+      <div><dt>Lugar</dt><dd>${esc(place(w))}</dd></div>
+      <div><dt>Escala</dt><dd>${ESC[w.esc]}</dd></div>
+      <div><dt>Estilo</dt><dd>${esc(w.est)}</dd></div>
+      ${prz ? `<div style="grid-column:1/-1"><dt>Premio Pritzker</dt><dd>${prz.map(p => `${p.year} · ${esc(p.name)}`).join("<br>")}</dd></div>` : ""}
+      ${w.co ? `<div style="grid-column:1/-1"><dt>Coordenadas</dt><dd style="font-family:var(--f-mono);font-weight:400;font-size:13px">${fmtCo(w.co)}</dd></div>` : ""}
+    </dl>
+    <p class="read">${esc(w.d)}</p>
+    <div class="look"><span class="mono">Mirá esto</span><p>${esc(w.k)}</p></div>
+  </article>`;
+}
+function fmtCo([lat, lon]){ const f = (v, p, n) => `${Math.abs(v).toFixed(4)}° ${v >= 0 ? p : n}`; return `${f(lat, "N", "S")} · ${f(lon, "E", "O")}`; }
+const sheet = $("#sheet");
+function openSheet(id){
+  const w = BY[id]; markSeen(id);
+  sheet.innerHTML = `<div class="tbar"><div class="top"><button class="x" data-act="close" aria-label="Cerrar">${ICON.x}</button><span class="mono">${PER[w.per]}</span><span style="width:28px"></span></div></div>
+    <div class="tbody">${fichaHTML(w)}</div>
+    <div class="tfoot"><button class="favbtn ${isFav(id) ? "on" : ""}" data-act="fav" data-id="${id}" aria-label="Guardar en favoritas">${ICON.heart}</button><button class="btn ghost" data-act="close">Cerrar</button></div>`;
+  sheet.hidden = false; $(".tbody", sheet).scrollTop = 0;
+}
+sheet.addEventListener("click", e => {
+  const b = e.target.closest("[data-act]"); if (!b) return;
+  if (b.dataset.act === "close") { sheet.hidden = true; renderAll(); }
+  if (b.dataset.act === "fav") b.classList.toggle("on", toggleFav(b.dataset.id));
+});
+document.addEventListener("keydown", e => { if (e.key === "Escape") { if (!sheet.hidden) { sheet.hidden = true; renderAll(); } else if (!tripEl.hidden) closeTrip(); } });
+
+/* ---------- pestañas ---------- */
+let current = "viaje";
+const views = {viaje:$("#v-viaje"), explorar:$("#v-explorar"), colecciones:$("#v-colecciones"), progreso:$("#v-progreso")};
+function go(tab, opts = {}){
+  if (!views[tab]) tab = "viaje";
+  current = tab;
+  for (const k in views) views[k].hidden = k !== tab;
+  document.querySelectorAll("nav.tabs button").forEach(b => b.setAttribute("aria-current", b.dataset.tab === tab ? "page" : "false"));
+  if (tab === "viaje") renderViaje();
+  if (tab === "explorar") renderExplorar(opts.filter);
+  if (tab === "colecciones") renderColecciones(opts.col);
+  if (tab === "progreso") renderProgreso();
+  try { history.replaceState(null, "", "#" + tab); } catch (e) {}
+}
+document.querySelector("nav.tabs").addEventListener("click", e => { const b = e.target.closest("button"); if (b) go(b.dataset.tab); });
+function renderAll(){ if (current === "explorar") refreshReels(); else go(current); }
+
+/* ---------- inicio ---------- */
+const DIAS = ["dom","lun","mar","mié","jue","vie","sáb"], MESES = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+function renderViaje(){
+  const t = trip(), s = streak(), now = new Date();
+  const dow = (now.getDay() + 6) % 7; // lunes = 0
+  const week = Array.from({length:7}, (_, i) => TODAY - dow + i);
+  const first = BY[t.news[0]];
+  const label = t.done ? "Viaje completado" : t.at > 0 ? `Seguir viaje · parada ${t.at + 1}` : "Subir al tren";
+  const lau = PRZ[(TODAY * 7) % PRZ.length], lw = BY[lau.work];
+  const seenN = Object.keys(S.seen).length;
+  views.viaje.innerHTML = `<div class="home pad">
+    <div class="brand"><span class="mark">${$("#logo").innerHTML}<b>ANDÉN</b></span><span class="mono">${DIAS[now.getDay()]} ${now.getDate()} ${MESES[now.getMonth()]}</span></div>
+    <div class="edge" aria-hidden="true"></div>
+    <div class="streak"><span class="n">${s}</span><span><b style="font-size:18px">${s === 1 ? "día seguido" : "días seguidos"}</b><br><span class="note">${s ? "No cortes la racha: un viaje por día." : "Hacé tu primer viaje para empezar la racha."}</span></span>
+      <div class="week">${week.map((d, i) => `<div><i class="${S.days.includes(d) ? "on" : ""} ${d === TODAY ? "today" : ""}"></i><span class="mono" style="font-size:10px">${"LMMJVSD"[i]}</span></div>`).join("")}</div>
+    </div>
+    <div class="trip">${first && first.img ? `<img src="img/${first.id}.jpg" alt="">` : ""}
+      <div class="in">
+        <span class="mono">Viaje de hoy · unos 10 minutos</span>
+        <h2>${t.done ? "Llegaste a destino" : "5 obras, 5 preguntas"}</h2>
+        ${stopsBar(t)}
+        <span class="note">${t.news.map(i => esc(BY[i].t)).join(" · ")}</span>
+        <button class="btn" data-act="trip">${label}</button>
+      </div>
+    </div>
+    <div class="row2">
+      <button class="btn ghost" data-act="review" ${seenN < 4 ? "disabled" : ""}>Repaso rápido</button>
+      <button class="btn ghost" data-act="feed">Explorar obras</button>
+    </div>
+    ${seenN < 4 ? `<p class="note" style="margin-top:-12px">El repaso se habilita cuando viste al menos 4 obras.</p>` : ""}
+    <div class="card laureate">
+      <div><span class="mono">Pritzker del día</span><div class="yr" style="margin-top:8px">${lau.year}</div><h3>${esc(lau.name)}</h3><span class="note">${esc(lau.country)}</span><p>${esc(lau.idea)}</p></div>
+      <button data-act="open" data-id="${lw.id}" aria-label="Ver ${esc(lw.t)}">${img(lw)}</button>
+    </div>
+    <div>
+      <div class="sec-h"><h3 style="font-size:19px">Tus colecciones</h3><button class="mono" data-act="cols">Ver todas</button></div>
+      <div class="bars">${["pritzker", "latam", "mujer"].map(k => barHTML(COL_BY[k])).join("")}</div>
+    </div>
+    ${PWA && !STANDALONE ? `<div class="install"><b>Instalala en tu celular</b><span class="note">En iPhone: abrí esta página en Safari, tocá Compartir y elegí “Agregar a inicio”. En Android: menú de Chrome y “Instalar app”. Después funciona sin conexión.</span></div>` : ""}
+  </div>`;
+}
+function colStats(c){ const ws = W.filter(c.f); return {ws, n:ws.length, seen:ws.filter(w => isSeen(w.id)).length}; }
+function barHTML(c){ const s = colStats(c); return `<div class="bar"><span>${c.name}</span><em>${s.seen}/${s.n}</em><div class="track"><i style="width:${(100 * s.seen / s.n).toFixed(1)}%"></i></div></div>`; }
+views.viaje.addEventListener("click", e => {
+  const b = e.target.closest("[data-act]"); if (!b) return;
+  const a = b.dataset.act;
+  if (a === "trip") openTrip();
+  if (a === "review") startQuick(Object.keys(S.seen).filter(id => BY[id]), "Repaso rápido");
+  if (a === "feed") go("explorar");
+  if (a === "cols") go("colecciones");
+  if (a === "open") openSheet(b.dataset.id);
+});
+
+/* ---------- explorar ---------- */
+let feedFilter = "todo", feedOrder = null, io = null;
+const FILTERS = [["todo", "Todo"], ["nuevas", "Sin ver"], ["pritzker", "Pritzker"], ["latam", "Latinoamérica"], ["mujer", "Arquitectas"], ...Object.entries(PER), ...Object.entries(ESC).map(([k, v]) => ["esc-" + k, v])];
+function feedList(){
+  if (!feedOrder) feedOrder = shuffle(W.map(w => w.id));
+  const f = feedFilter === "todo" ? () => true : feedFilter === "nuevas" ? w => !isSeen(w.id) : COL_BY[feedFilter].f;
+  return feedOrder.map(i => BY[i]).filter(f);
+}
+function reelHTML(w){
+  return `<article class="reel" data-id="${w.id}">${img(w)}<div class="shade"></div>
+    <div class="txt">
+      <span class="meta">${esc(w.yd)} · ${esc(place(w))}</span>
+      <h2>${esc(w.t)}</h2>
+      <span class="who">${esc(w.a)}</span>
+      <div class="tags">${w.tags.map(t => `<span class="tag y">${TAG[t]}</span>`).join("")}<span class="tag">${PER[w.per]}</span><span class="tag">${ESC[w.esc]}</span></div>
+      ${credit(w)}
+    </div>
+    <div class="side">
+      <button data-act="fav" class="${isFav(w.id) ? "on" : ""}" aria-label="Guardar">${ICON.heart}<span>Guardar</span></button>
+      <button data-act="info" aria-label="Ver ficha">${ICON.info}<span>Ficha</span></button>
+      <button data-act="q" aria-label="Pregunta sobre esta obra">${ICON.quiz}<span>Pregunta</span></button>
+    </div>
+  </article>`;
+}
+function renderExplorar(filter){
+  if (filter) { feedFilter = filter; }
+  const list = feedList();
+  views.explorar.innerHTML = `<div class="chips" role="toolbar" aria-label="Filtros">${FILTERS.map(([k, v]) => `<button class="chip" data-f="${k}" aria-pressed="${k === feedFilter}">${v}</button>`).join("")}</div>
+    <div class="feed">${list.length ? list.map(reelHTML).join("") : `<div class="pad" style="padding-top:90px"><p class="empty">Ya viste todas las obras de este filtro. Probá con otro o repasalas en Colecciones.</p></div>`}</div>
+    ${list.length && !S.hintFeed ? `<div class="hint">Deslizá hacia arriba · doble toque para guardar</div>` : ""}`;
+  const chip = $(`.chip[aria-pressed="true"]`, views.explorar); if (chip) chip.scrollIntoView({inline:"center", block:"nearest"});
+  observeReels();
+}
+function observeReels(){
+  if (io) io.disconnect();
+  const timers = new Map();
+  io = new IntersectionObserver(entries => entries.forEach(en => {
+    const id = en.target.dataset.id;
+    if (en.isIntersecting) timers.set(id, setTimeout(() => { markSeen(id); if (!S.hintFeed) { S.hintFeed = 1; const h = $(".hint", views.explorar); if (h) h.remove(); } }, 1500));
+    else { clearTimeout(timers.get(id)); timers.delete(id); }
+  }), {threshold:.6});
+  views.explorar.querySelectorAll(".reel").forEach(r => io.observe(r));
+}
+function refreshReels(){ views.explorar.querySelectorAll(".reel").forEach(r => { const b = $('[data-act="fav"]', r); if (b) b.classList.toggle("on", isFav(r.dataset.id)); }); }
+let lastTap = 0;
+views.explorar.addEventListener("click", e => {
+  const c = e.target.closest(".chip");
+  if (c) { feedFilter = c.dataset.f; return renderExplorar(); }
+  const reel = e.target.closest(".reel"); if (!reel) return;
+  const id = reel.dataset.id, b = e.target.closest("[data-act]");
+  if (b) {
+    if (b.dataset.act === "fav") b.classList.toggle("on", toggleFav(id));
+    if (b.dataset.act === "info") openSheet(id);
+    if (b.dataset.act === "q") { quick = {title:"Pregunta", steps:[{t:"q", q:makeQ(id)}], at:0, ok:0, nq:0, done:false, quick:true}; openTrip(); }
+    return;
+  }
+  if (e.target.closest("a")) return;
+  const now = Date.now();
+  if (now - lastTap < 320) {
+    if (!isFav(id)) toggleFav(id);
+    const fb = $('[data-act="fav"]', reel); if (fb) fb.classList.add("on");
+    const s = document.createElement("div"); s.innerHTML = ICON.heart; const svg = s.firstChild; svg.classList.add("burst"); reel.appendChild(svg); setTimeout(() => svg.remove(), 750);
+    lastTap = 0;
+  } else lastTap = now;
+});
+
+/* ---------- colecciones ---------- */
+function rowHTML(w){
+  return `<button class="li" data-act="open" data-id="${w.id}">${img(w)}<span style="min-width:0"><b>${esc(w.t)}${isSeen(w.id) ? "" : `<span class="dot" title="Sin ver"></span>`}</b><small>${esc(w.a)}</small></span><span class="y">${esc(shortYear(w))}</span></button>`;
+}
+function shortYear(w){ if (w.yd.length <= 12) return w.yd; const c = /^(c\.|s\.)/.test(w.yd) ? "c. " : ""; return c + (w.y < 0 ? -w.y + " a.C." : w.y); }
+function renderColecciones(colKey){
+  const v = views.colecciones;
+  if (!colKey) {
+    const tile = c => { const s = colStats(c), cov = BY[c.cover];
+      return `<button class="coltile ${c.wide ? "wide" : ""}" data-col="${c.key}">${img(cov, "", false)}<span class="in"><b>${c.name}</b><em>${s.seen} de ${s.n} vistas · ${esc(c.sub)}</em><span class="track"><i style="width:${(100 * s.seen / s.n).toFixed(1)}%"></i></span></span></button>`; };
+    v.innerHTML = `<div class="cols pad">
+      <div><span class="mono">Colecciones</span><h1 style="font-size:32px;margin-top:6px">Elegí por dónde seguir</h1></div>
+      <div class="colgrid">${COLS.filter(c => !c.group).map(tile).join("")}</div>
+      <div><div class="sec-h"><h3 style="font-size:19px">Por época</h3></div><div class="colgrid">${COLS.filter(c => c.group === "per").map(tile).join("")}</div></div>
+      <div><div class="sec-h"><h3 style="font-size:19px">Por escala</h3><span class="mono">de la silla a la ciudad</span></div><div class="colgrid">${COLS.filter(c => c.group === "esc").map(tile).join("")}</div></div>
+    </div>`;
+    v.scrollTop = 0; return;
+  }
+  const c = COL_BY[colKey], s = colStats(c);
+  const body = colKey === "pritzker"
+    ? PRZ.slice().reverse().map(p => { const w = BY[p.work]; return `<button class="prow" data-act="open" data-id="${w.id}"><span class="yr">${p.year}</span><span style="min-width:0"><b>${esc(p.name)}</b><small>${esc(p.country)} · ${esc(w.t)}</small><p>${esc(p.idea)}</p></span>${img(w)}</button>`; }).join("")
+    : s.ws.slice().sort((a, b) => a.y - b.y).map(rowHTML).join("");
+  v.innerHTML = `<div class="colhead pad">
+      <button class="back" data-act="cols">${ICON.back} Colecciones</button>
+      <span class="mono">${esc(c.sub)}</span>
+      <h1 style="font-size:32px">${c.name}</h1>
+      ${barHTML(c).replace(c.name, "Vistas")}
+      <div class="row2"><button class="btn" data-act="cquiz" data-col="${c.key}">Quiz de 6 preguntas</button><button class="btn ghost" data-act="cfeed" data-col="${c.key}">Ver en el feed</button></div>
+      ${colKey === "pritzker" ? `<p class="note">${PRZ.length} laureados en ${new Set(PRZ.map(p => p.year)).size} ediciones. Tocá cada fila para ver una obra clave.</p>` : `<p class="note">${s.n} obras, de la más antigua a la más nueva. El punto amarillo marca las que todavía no viste.</p>`}
+    </div>
+    <div class="list pad" style="padding-bottom:28px">${body}</div>`;
+  v.scrollTop = 0;
+}
+views.colecciones.addEventListener("click", e => {
+  const t = e.target.closest("[data-col],[data-act]"); if (!t) return;
+  const a = t.dataset.act;
+  if (a === "open") return openSheet(t.dataset.id);
+  if (a === "cols") return renderColecciones();
+  if (a === "cquiz") { const c = COL_BY[t.dataset.col]; return startQuick(W.filter(c.f).map(w => w.id), "Quiz · " + c.name); }
+  if (a === "cfeed") return go("explorar", {filter:t.dataset.col});
+  if (t.dataset.col) renderColecciones(t.dataset.col);
+});
+
+/* ---------- progreso ---------- */
+let confirmReset = false;
+function renderProgreso(){
+  const s = streak(), seen = Object.keys(S.seen).filter(id => BY[id]).length;
+  const learned = Object.values(S.box).filter(b => b[0] >= 3).length;
+  const start = TODAY - 27 - ((new Date().getDay() + 6) % 7 === 6 ? 0 : 0);
+  const days = Array.from({length:28}, (_, i) => start + i);
+  views.progreso.innerHTML = `<div class="prog pad">
+    <div><span class="mono">Progreso</span><h1 style="font-size:32px;margin-top:6px">Tu recorrido</h1></div>
+    <div class="big4">
+      <div><b>${s}</b><span class="mono">racha actual</span></div>
+      <div><b>${S.days.length}</b><span class="mono">viajes hechos</span></div>
+      <div><b>${seen}<span style="font-size:18px;color:var(--muted)">/${W.length}</span></b><span class="mono">obras vistas</span></div>
+      <div><b>${S.qa.n ? Math.round(100 * S.qa.ok / S.qa.n) : 0}%</b><span class="mono">aciertos (${S.qa.n})</span></div>
+    </div>
+    <div><div class="sec-h"><h3 style="font-size:19px">Últimos 28 días</h3><span class="mono">${learned} obras aprendidas</span></div>
+      <div class="cal">${days.map(d => `<i class="${S.days.includes(d) ? "on" : ""} ${d === TODAY ? "today" : ""}" title="${d === TODAY ? "Hoy" : ""}"></i>`).join("")}</div>
+      <p class="note" style="margin-top:8px">Una obra cuenta como aprendida después de acertarla tres veces en días distintos.</p></div>
+    <div><div class="sec-h"><h3 style="font-size:19px">Guardadas</h3><span class="mono">${S.favs.length}</span></div>
+      ${S.favs.length ? `<div class="favs">${S.favs.filter(id => BY[id]).map(id => `<button data-act="open" data-id="${id}" aria-label="${esc(BY[id].t)}">${img(BY[id])}</button>`).join("")}</div>` : `<p class="empty">Todavía no guardaste obras. En Explorar, tocá dos veces una foto para guardarla.</p>`}</div>
+    <div class="bars">${COLS.filter(c => c.group !== "esc").map(barHTML).join("")}</div>
+    ${PWA && !STANDALONE ? `<div class="install"><b>Instalala en tu celular</b><span class="note">En iPhone: abrí esta página en Safari, tocá Compartir y elegí “Agregar a inicio”. En Android: menú de Chrome y “Instalar app”. Después funciona sin conexión.</span></div>` : ""}
+    <p class="note">${syncNote}</p>
+    ${confirmReset ? `<div class="confirm"><b>¿Borrar todo tu progreso?</b><span class="note">Se pierden la racha, las obras vistas y las guardadas. No se puede deshacer.</span><div class="row2"><button class="btn" data-act="reset-yes">Borrar progreso</button><button class="btn ghost" data-act="reset-no">Cancelar</button></div></div>` : `<button class="danger" data-act="reset" style="align-self:flex-start">Borrar mi progreso</button>`}
+    <p class="note">Fotos de Wikimedia Commons, con sus autores y licencias en cada imagen. Datos verificados con Wikidata y Wikipedia.</p>
+  </div>`;
+}
+views.progreso.addEventListener("click", e => {
+  const b = e.target.closest("[data-act]"); if (!b) return;
+  const a = b.dataset.act;
+  if (a === "open") return openSheet(b.dataset.id);
+  if (a === "reset") { confirmReset = true; return renderProgreso(); }
+  if (a === "reset-no") { confirmReset = false; return renderProgreso(); }
+  if (a === "reset-yes") { confirmReset = false; S = blank(); save(); renderProgreso(); }
+});
+
+const start = (location.hash || "").slice(1);
+go(views[start] ? start : "viaje");
+})();
+</script>
+
+<script>if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));</script>
+</body>
+</html>
